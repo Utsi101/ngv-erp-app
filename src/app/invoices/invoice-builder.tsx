@@ -91,13 +91,7 @@ const invoiceSchema = z.object({
 }) satisfies z.ZodType<Partial<InvoiceFormValues>>;
 
 // ---------- Component ----------
-export function InvoiceBuilder({
-  buyers,
-  products,
-}: {
-  buyers: Buyer[];
-  products: Product[];
-}) {
+export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products: Product[] }) {
   const [isPending, startTransition] = useTransition();
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -204,7 +198,11 @@ export function InvoiceBuilder({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="col-span-2">
               <Label className="text-xs">Buyer</Label>
-              <Select onValueChange={(val) => { if (val) setValue('buyerId', String(val)); }}>
+              <Select
+                onValueChange={(val) => {
+                  if (val) setValue('buyerId', String(val));
+                }}
+              >
                 <SelectTrigger className="h-8 text-xs mt-1">
                   <SelectValue placeholder="Select buyer..." />
                 </SelectTrigger>
@@ -225,7 +223,9 @@ export function InvoiceBuilder({
               <Label className="text-xs">Incoterm</Label>
               <Select
                 defaultValue="FOB"
-                onValueChange={(val) => { if (val) setValue('incoterm', String(val) as 'EXW' | 'FOB' | 'CIF' | 'DAP'); }}
+                onValueChange={(val) => {
+                  if (val) setValue('incoterm', String(val) as 'EXW' | 'FOB' | 'CIF' | 'DAP');
+                }}
               >
                 <SelectTrigger className="h-8 text-xs mt-1">
                   <SelectValue />
@@ -254,15 +254,27 @@ export function InvoiceBuilder({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
               <Label className="text-xs">Port of Loading</Label>
-              <Input {...register('portOfLoading')} className="h-8 text-xs mt-1" placeholder="INNSA" />
+              <Input
+                {...register('portOfLoading')}
+                className="h-8 text-xs mt-1"
+                placeholder="INNSA"
+              />
             </div>
             <div>
               <Label className="text-xs">Port of Discharge</Label>
-              <Input {...register('portOfDischarge')} className="h-8 text-xs mt-1" placeholder="USLAX" />
+              <Input
+                {...register('portOfDischarge')}
+                className="h-8 text-xs mt-1"
+                placeholder="USLAX"
+              />
             </div>
             <div>
               <Label className="text-xs">Vessel Name</Label>
-              <Input {...register('vesselName')} className="h-8 text-xs mt-1" placeholder="MSC Oscar" />
+              <Input
+                {...register('vesselName')}
+                className="h-8 text-xs mt-1"
+                placeholder="MSC Oscar"
+              />
             </div>
             <div />
           </div>
@@ -298,8 +310,12 @@ export function InvoiceBuilder({
                 <Table>
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
-                      <TableHead className="text-[10px] uppercase tracking-wider">Product / Variant</TableHead>
-                      <TableHead className="text-[10px] uppercase tracking-wider">HS Code</TableHead>
+                      <TableHead className="text-[10px] uppercase tracking-wider">
+                        Product / Variant
+                      </TableHead>
+                      <TableHead className="text-[10px] uppercase tracking-wider">
+                        HS Code
+                      </TableHead>
                       <TableHead className="text-[10px] uppercase tracking-wider text-right w-24">
                         Unit Price
                       </TableHead>
@@ -319,7 +335,9 @@ export function InvoiceBuilder({
                         <TableRow key={field.id}>
                           <TableCell className="py-1">
                             <Select
-                              onValueChange={(val) => { if (val) setValue(`items.${index}.variantId`, String(val)); }}
+                              onValueChange={(val) => {
+                                if (val) setValue(`items.${index}.variantId`, String(val));
+                              }}
                             >
                               <SelectTrigger className="h-7 text-xs">
                                 <SelectValue placeholder="Select variant..." />
@@ -404,7 +422,9 @@ export function InvoiceBuilder({
             <div className="col-span-2 text-right space-y-1">
               <div className="flex justify-end gap-4 text-xs">
                 <span className="text-muted-foreground">Subtotal:</span>
-                <span className="font-mono tabular-nums font-medium w-28">{formatUSD(subTotal)}</span>
+                <span className="font-mono tabular-nums font-medium w-28">
+                  {formatUSD(subTotal)}
+                </span>
               </div>
               <div className="flex justify-end gap-4 text-xs">
                 <span className="text-muted-foreground">Freight:</span>
@@ -431,7 +451,9 @@ export function InvoiceBuilder({
             <div>
               {submitError && <p className="text-[10px] text-destructive">{submitError}</p>}
               {submitSuccess && (
-                <p className="text-[10px] text-green-600 font-medium">Invoice created successfully!</p>
+                <p className="text-[10px] text-green-600 font-medium">
+                  Invoice created successfully!
+                </p>
               )}
             </div>
             <Button type="submit" size="sm" className="h-8 text-xs gap-1.5" disabled={isPending}>

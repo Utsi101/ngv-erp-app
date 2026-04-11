@@ -1,17 +1,8 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from '@/components/ui/table';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { createProduct, createVariant } from '@/app/actions/inventory';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -19,11 +10,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Search, Plus, ChevronRight, ChevronDown } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { formatUSD, formatWeight } from '@/lib/format';
-import { createProduct, createVariant } from '@/app/actions/inventory';
+import { ChevronDown, ChevronRight, Plus, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import React, { useState, useTransition } from 'react';
 
 type Variant = {
   id: string;
@@ -137,21 +137,42 @@ export function InventoryTable({ products }: { products: Product[] }) {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label className="text-xs">SKU Base</Label>
-                  <Input name="skuBase" required className="h-8 text-xs mt-1" placeholder="BAG-001" />
+                  <Input
+                    name="skuBase"
+                    required
+                    className="h-8 text-xs mt-1"
+                    placeholder="BAG-001"
+                  />
                 </div>
                 <div>
                   <Label className="text-xs">HS Code</Label>
-                  <Input name="hsCode" required className="h-8 text-xs mt-1" placeholder="42022210" />
+                  <Input
+                    name="hsCode"
+                    required
+                    className="h-8 text-xs mt-1"
+                    placeholder="42022210"
+                  />
                 </div>
               </div>
               <div>
                 <Label className="text-xs">Description</Label>
-                <Input name="description" required className="h-8 text-xs mt-1" placeholder="Leather crossbody bag" />
+                <Input
+                  name="description"
+                  required
+                  className="h-8 text-xs mt-1"
+                  placeholder="Leather crossbody bag"
+                />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label className="text-xs">Unit Price (USD)</Label>
-                  <Input name="unitPriceUsd" type="number" step="0.01" required className="h-8 text-xs mt-1" />
+                  <Input
+                    name="unitPriceUsd"
+                    type="number"
+                    step="0.01"
+                    required
+                    className="h-8 text-xs mt-1"
+                  />
                 </div>
                 <div>
                   <Label className="text-xs">MOQ</Label>
@@ -161,15 +182,33 @@ export function InventoryTable({ products }: { products: Product[] }) {
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <Label className="text-xs">Net Wt (kg)</Label>
-                  <Input name="weightNet" type="number" step="0.01" required className="h-8 text-xs mt-1" />
+                  <Input
+                    name="weightNet"
+                    type="number"
+                    step="0.01"
+                    required
+                    className="h-8 text-xs mt-1"
+                  />
                 </div>
                 <div>
                   <Label className="text-xs">Gross Wt (kg)</Label>
-                  <Input name="weightGross" type="number" step="0.01" required className="h-8 text-xs mt-1" />
+                  <Input
+                    name="weightGross"
+                    type="number"
+                    step="0.01"
+                    required
+                    className="h-8 text-xs mt-1"
+                  />
                 </div>
                 <div>
                   <Label className="text-xs">CBM</Label>
-                  <Input name="cbm" type="number" step="0.001" required className="h-8 text-xs mt-1" />
+                  <Input
+                    name="cbm"
+                    type="number"
+                    step="0.001"
+                    required
+                    className="h-8 text-xs mt-1"
+                  />
                 </div>
               </div>
               <Button type="submit" size="sm" className="w-full h-8 text-xs" disabled={isPending}>
@@ -189,10 +228,18 @@ export function InventoryTable({ products }: { products: Product[] }) {
               <TableHead className="text-[10px] uppercase tracking-wider">SKU</TableHead>
               <TableHead className="text-[10px] uppercase tracking-wider">Description</TableHead>
               <TableHead className="text-[10px] uppercase tracking-wider">HS Code</TableHead>
-              <TableHead className="text-[10px] uppercase tracking-wider text-right">Unit Price</TableHead>
-              <TableHead className="text-[10px] uppercase tracking-wider text-right">Net Wt</TableHead>
-              <TableHead className="text-[10px] uppercase tracking-wider text-right">Gross Wt</TableHead>
-              <TableHead className="text-[10px] uppercase tracking-wider text-center">Variants</TableHead>
+              <TableHead className="text-[10px] uppercase tracking-wider text-right">
+                Unit Price
+              </TableHead>
+              <TableHead className="text-[10px] uppercase tracking-wider text-right">
+                Net Wt
+              </TableHead>
+              <TableHead className="text-[10px] uppercase tracking-wider text-right">
+                Gross Wt
+              </TableHead>
+              <TableHead className="text-[10px] uppercase tracking-wider text-center">
+                Variants
+              </TableHead>
               <TableHead className="text-[10px] uppercase tracking-wider w-20" />
             </TableRow>
           </TableHeader>
@@ -207,7 +254,7 @@ export function InventoryTable({ products }: { products: Product[] }) {
               filtered.map((product) => {
                 const isExpanded = expandedRows.has(product.id);
                 return (
-                  <>
+                  <React.Fragment key={product.id}>
                     <TableRow
                       key={product.id}
                       className="cursor-pointer"
@@ -220,7 +267,9 @@ export function InventoryTable({ products }: { products: Product[] }) {
                           <ChevronRight className="h-3 w-3 text-muted-foreground" />
                         )}
                       </TableCell>
-                      <TableCell className="text-xs font-mono font-medium">{product.skuBase}</TableCell>
+                      <TableCell className="text-xs font-mono font-medium">
+                        {product.skuBase}
+                      </TableCell>
                       <TableCell className="text-xs">{product.description}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className="text-[10px] font-mono px-1.5 py-0">
@@ -278,7 +327,7 @@ export function InventoryTable({ products }: { products: Product[] }) {
                           <TableCell />
                         </TableRow>
                       ))}
-                  </>
+                  </React.Fragment>
                 );
               })
             )}
@@ -295,7 +344,12 @@ export function InventoryTable({ products }: { products: Product[] }) {
           <form action={handleCreateVariant} className="space-y-3">
             <div>
               <Label className="text-xs">Full SKU</Label>
-              <Input name="skuFull" required className="h-8 text-xs mt-1" placeholder="BAG-001-BLK-NAPPA" />
+              <Input
+                name="skuFull"
+                required
+                className="h-8 text-xs mt-1"
+                placeholder="BAG-001-BLK-NAPPA"
+              />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -309,7 +363,12 @@ export function InventoryTable({ products }: { products: Product[] }) {
             </div>
             <div>
               <Label className="text-xs">Stock Allocation</Label>
-              <Input name="stockAllocation" type="number" defaultValue="0" className="h-8 text-xs mt-1" />
+              <Input
+                name="stockAllocation"
+                type="number"
+                defaultValue="0"
+                className="h-8 text-xs mt-1"
+              />
             </div>
             <Button type="submit" size="sm" className="w-full h-8 text-xs" disabled={isPending}>
               {isPending ? 'Creating...' : 'Add Variant'}

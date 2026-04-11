@@ -38,7 +38,10 @@ type OrderWithBuyer = {
   }[];
 };
 
-const statusLabels: Record<string, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
+const statusLabels: Record<
+  string,
+  { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }
+> = {
   DRAFT: { label: 'Draft', variant: 'outline' },
   PROFORMA_SENT: { label: 'Proforma', variant: 'secondary' },
   ADVANCE_RECEIVED: { label: 'Advance Rcvd', variant: 'default' },
@@ -78,8 +81,12 @@ export function InvoiceList({ orders }: { orders: OrderWithBuyer[] }) {
               <TableHead className="text-[10px] uppercase tracking-wider">Incoterm</TableHead>
               <TableHead className="text-[10px] uppercase tracking-wider">Vessel</TableHead>
               <TableHead className="text-[10px] uppercase tracking-wider">LUT</TableHead>
-              <TableHead className="text-[10px] uppercase tracking-wider text-right">Items</TableHead>
-              <TableHead className="text-[10px] uppercase tracking-wider text-right">Grand Total</TableHead>
+              <TableHead className="text-[10px] uppercase tracking-wider text-right">
+                Items
+              </TableHead>
+              <TableHead className="text-[10px] uppercase tracking-wider text-right">
+                Grand Total
+              </TableHead>
               <TableHead className="text-[10px] uppercase tracking-wider">Status</TableHead>
               <TableHead className="text-[10px] uppercase tracking-wider">Date</TableHead>
             </TableRow>
@@ -87,21 +94,29 @@ export function InvoiceList({ orders }: { orders: OrderWithBuyer[] }) {
           <TableBody>
             {orders.map((order) => (
               <TableRow key={order.id}>
-                <TableCell className="text-xs font-mono font-medium">{order.documentNumber}</TableCell>
+                <TableCell className="text-xs font-mono font-medium">
+                  {order.documentNumber}
+                </TableCell>
                 <TableCell className="text-xs">
                   {order.buyer.companyName}
-                  <span className="text-muted-foreground ml-1 text-[10px]">({order.buyer.country})</span>
+                  <span className="text-muted-foreground ml-1 text-[10px]">
+                    ({order.buyer.country})
+                  </span>
                 </TableCell>
                 <TableCell>
                   <Badge variant="outline" className="text-[10px] px-1.5 py-0">
                     {order.incoterm}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-xs text-muted-foreground">{order.vesselName || '—'}</TableCell>
+                <TableCell className="text-xs text-muted-foreground">
+                  {order.vesselName || '—'}
+                </TableCell>
                 <TableCell className="text-[10px] font-mono text-muted-foreground">
                   {order.appliedLutNumber || '—'}
                 </TableCell>
-                <TableCell className="text-xs text-right tabular-nums">{order.items.length}</TableCell>
+                <TableCell className="text-xs text-right tabular-nums">
+                  {order.items.length}
+                </TableCell>
                 <TableCell className="text-xs font-mono text-right tabular-nums font-medium">
                   {formatUSD(order.grandTotal)}
                 </TableCell>

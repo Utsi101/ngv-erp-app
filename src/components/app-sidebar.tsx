@@ -2,13 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  LayoutDashboard,
-  Package,
-  Users,
-  FileText,
-  Building2,
-} from 'lucide-react';
+import { LayoutDashboard, Package, Users, FileText, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
 
@@ -40,10 +34,7 @@ export function AppSidebar() {
       {/* Navigation */}
       <nav className="flex-1 px-2 py-3 space-y-0.5">
         {navigation.map((item) => {
-          const isActive =
-            item.href === '/'
-              ? pathname === '/'
-              : pathname.startsWith(item.href);
+          const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
 
           return (
             <Link
@@ -65,9 +56,7 @@ export function AppSidebar() {
 
       {/* Footer */}
       <div className="border-t border-sidebar-border px-4 py-3">
-        <p className="text-[10px] text-sidebar-foreground/40">
-          v0.1.0 &middot; India Export
-        </p>
+        <p className="text-[10px] text-sidebar-foreground/40">v0.1.0 &middot; India Export</p>
       </div>
     </aside>
   );

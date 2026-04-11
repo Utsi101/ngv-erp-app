@@ -19,13 +19,15 @@ export default function InventoryPage() {
         <h1 className="text-base font-semibold">Inventory Management</h1>
         <p className="text-xs text-muted-foreground">Products, variants, and stock levels</p>
       </div>
-      <Suspense fallback={
-        <div className="space-y-2">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-10 bg-muted animate-pulse rounded" />
-          ))}
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div className="space-y-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-10 bg-muted animate-pulse rounded" />
+            ))}
+          </div>
+        }
+      >
         <InventoryData />
       </Suspense>
     </div>

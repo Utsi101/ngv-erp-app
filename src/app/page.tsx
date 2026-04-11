@@ -19,7 +19,10 @@ function DashboardSkeleton() {
   );
 }
 
-const statusLabels: Record<string, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
+const statusLabels: Record<
+  string,
+  { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }
+> = {
   DRAFT: { label: 'Draft', variant: 'outline' },
   PROFORMA_SENT: { label: 'Proforma', variant: 'secondary' },
   ADVANCE_RECEIVED: { label: 'Advance Rcvd', variant: 'default' },
@@ -45,18 +48,24 @@ async function DashboardContent() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-1 pt-3 px-4">
-            <CardTitle className="text-xs font-medium text-muted-foreground">Active Shipments</CardTitle>
+            <CardTitle className="text-xs font-medium text-muted-foreground">
+              Active Shipments
+            </CardTitle>
             <Ship className="h-3.5 w-3.5 text-muted-foreground" />
           </CardHeader>
           <CardContent className="px-4 pb-3">
             <div className="text-2xl font-bold tabular-nums">{activeShipments}</div>
-            <p className="text-[10px] text-muted-foreground mt-0.5">In production, ready, or shipped</p>
+            <p className="text-[10px] text-muted-foreground mt-0.5">
+              In production, ready, or shipped
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-1 pt-3 px-4">
-            <CardTitle className="text-xs font-medium text-muted-foreground">Outstanding Payments</CardTitle>
+            <CardTitle className="text-xs font-medium text-muted-foreground">
+              Outstanding Payments
+            </CardTitle>
             <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />
           </CardHeader>
           <CardContent className="px-4 pb-3">
@@ -67,7 +76,9 @@ async function DashboardContent() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-1 pt-3 px-4">
-            <CardTitle className="text-xs font-medium text-muted-foreground">Inventory Products</CardTitle>
+            <CardTitle className="text-xs font-medium text-muted-foreground">
+              Inventory Products
+            </CardTitle>
             <Package className="h-3.5 w-3.5 text-muted-foreground" />
           </CardHeader>
           <CardContent className="px-4 pb-3">
@@ -98,8 +109,13 @@ async function DashboardContent() {
                     <span className="text-xs text-muted-foreground">{order.buyer.companyName}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono tabular-nums">{formatUSD(order.grandTotal)}</span>
-                    <Badge variant={statusLabels[order.status]?.variant ?? 'outline'} className="text-[10px] px-1.5 py-0">
+                    <span className="text-xs font-mono tabular-nums">
+                      {formatUSD(order.grandTotal)}
+                    </span>
+                    <Badge
+                      variant={statusLabels[order.status]?.variant ?? 'outline'}
+                      className="text-[10px] px-1.5 py-0"
+                    >
                       {statusLabels[order.status]?.label ?? order.status}
                     </Badge>
                   </div>

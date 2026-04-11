@@ -1,0 +1,10 @@
+# Ignore build outputs
+.next
+dist
+build
+
+# Ignore the generated Prisma client
+prisma/prisma-client
+
+# Ignore lock files
+package-lock.json

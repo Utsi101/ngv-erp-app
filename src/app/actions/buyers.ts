@@ -5,7 +5,9 @@ import { db } from '@/lib/db';
 export async function getBuyers() {
   try {
     const buyers = await db.buyer.findMany({
-      include: { orders: { select: { id: true, grandTotal: true, status: true, createdAt: true } } },
+      include: {
+        orders: { select: { id: true, grandTotal: true, status: true, createdAt: true } },
+      },
       orderBy: { createdAt: 'desc' },
     });
     return { success: true as const, data: buyers };

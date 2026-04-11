@@ -20,22 +20,21 @@ export async function getOrders() {
 
 export async function getDashboardStats() {
   try {
-    const [activeShipments, totalOutstanding, inventoryCount, recentOrders] =
-      await Promise.all([
-        db.order.count({
-          where: { status: { in: ['SHIPPED', 'READY_FOR_DISPATCH', 'IN_PRODUCTION'] } },
-        }),
-        db.order.aggregate({
-          where: { status: { notIn: ['PAYMENT_REALIZED', 'REGULATORY_CLOSED'] } },
-          _sum: { grandTotal: true },
-        }),
-        db.product.count(),
-        db.order.findMany({
-          take: 5,
-          include: { buyer: true },
-          orderBy: { createdAt: 'desc' },
-        }),
-      ]);
+    const [activeShipments, totalOutstanding, inventoryCount, recentOrders] = await Promise.all([
+      db.order.count({
+        where: { status: { in: ['SHIPPED', 'READY_FOR_DISPATCH', 'IN_PRODUCTION'] } },
+      }),
+      db.order.aggregate({
+        where: { status: { notIn: ['PAYMENT_REALIZED', 'REGULATORY_CLOSED'] } },
+        _sum: { grandTotal: true },
+      }),
+      db.product.count(),
+      db.order.findMany({
+        take: 5,
+        include: { buyer: true },
+        orderBy: { createdAt: 'desc' },
+      }),
+    ]);
 
     return {
       success: true as const,

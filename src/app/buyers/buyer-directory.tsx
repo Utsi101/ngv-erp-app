@@ -1,12 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -199,14 +194,19 @@ export function BuyerDirectory({ buyers }: { buyers: Buyer[] }) {
                         Recent Orders
                       </p>
                       {buyer.orders.slice(0, 3).map((order) => (
-                        <div key={order.id} className="flex items-center justify-between text-[10px]">
+                        <div
+                          key={order.id}
+                          className="flex items-center justify-between text-[10px]"
+                        >
                           <Badge
                             variant={statusColors[order.status] ?? 'outline'}
                             className="text-[9px] px-1 py-0"
                           >
                             {order.status.replace(/_/g, ' ')}
                           </Badge>
-                          <span className="font-mono tabular-nums">{formatUSD(order.grandTotal)}</span>
+                          <span className="font-mono tabular-nums">
+                            {formatUSD(order.grandTotal)}
+                          </span>
                         </div>
                       ))}
                     </div>
