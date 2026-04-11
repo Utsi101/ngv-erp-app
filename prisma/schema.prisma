@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ------------------------------------------------------
+// ENUMS
+// ------------------------------------------------------
+enum OrderStatus {
+  DRAFT
+  PROFORMA_SENT
+  ADVANCE_RECEIVED
+  IN_PRODUCTION
+  READY_FOR_DISPATCH
+  SHIPPED
+  PAYMENT_REALIZED
+  REGULATORY_CLOSED
+}
+
+enum Incoterm {
+  EXW
+  FOB
+  CIF
+  DAP
+}
+
+enum PaymentType {
+  ADVANCE
+  BALANCE
+}
+
+enum FileType {
+  SWIFT_COPY
+  SHIPPING_BILL
+  BL_COPY
+  CUSTOM_DESIGN
+  OTHER
+}
+
+// ------------------------------------------------------
+// COMPLIANCE & CRM
+// ------------------------------------------------------
+model CompanyProfile {
+  id            String    @id @default(uuid())
+  companyName   String
+  iecCode       String? // 10-digit
+  adCode        String? // 14-digit
+  gstin         String? // 15-digit
+  lutNumber     String?
+  lutExpiryDate DateTime?
+  updatedAt     DateTime  @updatedAt
+}
+
+model Buyer {
+  id                String   @id @default(uuid())
+  companyName       String
+  contactPerson     String?
+  billingAddress    String
+  shippingAddress   String
+  country           String
+  taxId             String?
+  preferredCurrency String   @default("USD")
+  orders            Order[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// ------------------------------------------------------
+// INVENTORY
+// ------------------------------------------------------
+model Product {
+  id           String           @id @default(uuid())
+  skuBase      String           @unique
+  description  String
+  hsCode       String
+  unitPriceUsd Float
+  moq          Int              @default(1)
+  weightNet    Float // in kg
+  weightGross  Float // in kg
+  cbm          Float // Cubic Meters
+  variants     ProductVariant[]
+  createdAt    DateTime         @default(now())
+}
+
+model ProductVariant {
+  id              String      @id @default(uuid())
+  productId       String
+  product         Product     @relation(fields: [productId], references: [id])
+  skuFull         String      @unique
+  color           String?
+  leatherType     String?
+  stockAllocation Int         @default(0)
+  orderItems      OrderItem[]
+}
+
+// ------------------------------------------------------
+// ORDERS & FINANCIALS (THE SNAPSHOTS)
+// ------------------------------------------------------
+model Order {
+  id             String      @id @default(uuid())
+  documentNumber String      @unique // e.g., INV-2026-0001
+  status         OrderStatus @default(DRAFT)
+
+  buyerId String
+  buyer   Buyer  @relation(fields: [buyerId], references: [id])
+
+  // Logistics
+  incoterm           Incoterm  @default(FOB)
+  portOfLoading      String?
+  portOfDischarge    String?
+  vesselName         String?
+  awbBlNumber        String?
+  shippingBillNumber String? // ICEGATE Compliance
+  shippingBillDate   DateTime?
+
+  // Financials
+  currency           String  @default("USD")
+  subTotal           Float   @default(0)
+  freightCost        Float   @default(0)
+  insuranceCost      Float   @default(0)
+  grandTotal         Float   @default(0)
+  lockedExchangeRate Float? // Snapshot for INR conversion on PDF
+  appliedLutNumber   String? // Snapshot for GST compliance
+
+  items     OrderItem[]
+  payments  PaymentLedger[]
+  documents DocumentAttachment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id      String @id @default(uuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id])
+
+  quantity Int
+
+  // THE SNAPSHOT FIELDS (Crucial for historical accuracy)
+  historicalUnitPrice   Float
+  historicalDescription String
+  historicalHsCode      String
+  historicalNetWeight   Float
+  historicalGrossWeight Float
+  historicalCbm         Float
+  lineTotal             Float
+}
+
+// ------------------------------------------------------
+// TRACKING & VAULT
+// ------------------------------------------------------
+model PaymentLedger {
+  id             String      @id @default(uuid())
+  orderId        String
+  order          Order       @relation(fields: [orderId], references: [id])
+  amount         Float
+  currency       String
+  exchangeRate   Float
+  paymentType    PaymentType
+  paymentDate    DateTime
+  referenceId    String? // Wire transfer #
+  eBrcNumber     String? // FEMA closure
+  eBrcDate       DateTime?
+  bankFircNumber String?
+}
+
+model DocumentAttachment {
+  id          String   @id @default(uuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  fileName    String
+  s3ObjectKey String   @unique // The secure reference to AWS
+  fileType    FileType
+  createdAt   DateTime @default(now())
+}
