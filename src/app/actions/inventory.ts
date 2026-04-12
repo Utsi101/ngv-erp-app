@@ -62,3 +62,28 @@ export async function getProductsWithVariants() {
     return { success: false as const, error: 'Failed to fetch inventory' };
   }
 }
+
+export async function editProduct(
+  id: string,
+  data: {
+    skuBase?: string;
+    description?: string;
+    hsCode?: string;
+    unitPriceUsd?: number;
+    moq?: number;
+    weightNet?: number;
+    weightGross?: number;
+    cbm?: number;
+  }
+) {
+  try {
+    const product = await db.product.update({
+      where: { id },
+      data,
+    });
+    return { success: true as const, data: product };
+  } catch (error) {
+    console.error('Database Error:', error);
+    return { success: false as const, error: 'Failed to update product' };
+  }
+}

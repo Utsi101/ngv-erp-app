@@ -27,33 +27,90 @@ export type AggregateCompanyProfile = {
 export type CompanyProfileMinAggregateOutputType = {
   id: string | null
   companyName: string | null
-  iecCode: string | null
-  adCode: string | null
+  addressLine1: string | null
+  addressLine2: string | null
+  city: string | null
+  district: string | null
+  state: string | null
+  stateCode: string | null
+  pincode: string | null
   gstin: string | null
+  iecCode: string | null
+  pan: string | null
   lutNumber: string | null
-  lutExpiryDate: Date | null
+  llpin: string | null
+  adCode: string | null
+  bankName: string | null
+  bankBranch: string | null
+  bankAddress: string | null
+  accountName: string | null
+  accountNumber: string | null
+  swiftCode: string | null
+  ifscCode: string | null
+  email: string | null
+  phone: string | null
+  website: string | null
+  createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type CompanyProfileMaxAggregateOutputType = {
   id: string | null
   companyName: string | null
-  iecCode: string | null
-  adCode: string | null
+  addressLine1: string | null
+  addressLine2: string | null
+  city: string | null
+  district: string | null
+  state: string | null
+  stateCode: string | null
+  pincode: string | null
   gstin: string | null
+  iecCode: string | null
+  pan: string | null
   lutNumber: string | null
-  lutExpiryDate: Date | null
+  llpin: string | null
+  adCode: string | null
+  bankName: string | null
+  bankBranch: string | null
+  bankAddress: string | null
+  accountName: string | null
+  accountNumber: string | null
+  swiftCode: string | null
+  ifscCode: string | null
+  email: string | null
+  phone: string | null
+  website: string | null
+  createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type CompanyProfileCountAggregateOutputType = {
   id: number
   companyName: number
-  iecCode: number
-  adCode: number
+  addressLine1: number
+  addressLine2: number
+  city: number
+  district: number
+  state: number
+  stateCode: number
+  pincode: number
   gstin: number
+  iecCode: number
+  pan: number
   lutNumber: number
-  lutExpiryDate: number
+  llpin: number
+  adCode: number
+  bankName: number
+  bankBranch: number
+  bankAddress: number
+  accountName: number
+  accountNumber: number
+  swiftCode: number
+  ifscCode: number
+  email: number
+  phone: number
+  website: number
+  createdAt: number
   updatedAt: number
   _all: number
 }
@@ -62,33 +119,90 @@ export type CompanyProfileCountAggregateOutputType = {
 export type CompanyProfileMinAggregateInputType = {
   id?: true
   companyName?: true
-  iecCode?: true
-  adCode?: true
+  addressLine1?: true
+  addressLine2?: true
+  city?: true
+  district?: true
+  state?: true
+  stateCode?: true
+  pincode?: true
   gstin?: true
+  iecCode?: true
+  pan?: true
   lutNumber?: true
-  lutExpiryDate?: true
+  llpin?: true
+  adCode?: true
+  bankName?: true
+  bankBranch?: true
+  bankAddress?: true
+  accountName?: true
+  accountNumber?: true
+  swiftCode?: true
+  ifscCode?: true
+  email?: true
+  phone?: true
+  website?: true
+  createdAt?: true
   updatedAt?: true
 }
 
 export type CompanyProfileMaxAggregateInputType = {
   id?: true
   companyName?: true
-  iecCode?: true
-  adCode?: true
+  addressLine1?: true
+  addressLine2?: true
+  city?: true
+  district?: true
+  state?: true
+  stateCode?: true
+  pincode?: true
   gstin?: true
+  iecCode?: true
+  pan?: true
   lutNumber?: true
-  lutExpiryDate?: true
+  llpin?: true
+  adCode?: true
+  bankName?: true
+  bankBranch?: true
+  bankAddress?: true
+  accountName?: true
+  accountNumber?: true
+  swiftCode?: true
+  ifscCode?: true
+  email?: true
+  phone?: true
+  website?: true
+  createdAt?: true
   updatedAt?: true
 }
 
 export type CompanyProfileCountAggregateInputType = {
   id?: true
   companyName?: true
-  iecCode?: true
-  adCode?: true
+  addressLine1?: true
+  addressLine2?: true
+  city?: true
+  district?: true
+  state?: true
+  stateCode?: true
+  pincode?: true
   gstin?: true
+  iecCode?: true
+  pan?: true
   lutNumber?: true
-  lutExpiryDate?: true
+  llpin?: true
+  adCode?: true
+  bankName?: true
+  bankBranch?: true
+  bankAddress?: true
+  accountName?: true
+  accountNumber?: true
+  swiftCode?: true
+  ifscCode?: true
+  email?: true
+  phone?: true
+  website?: true
+  createdAt?: true
   updatedAt?: true
   _all?: true
 }
@@ -168,11 +282,30 @@ export type CompanyProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type CompanyProfileGroupByOutputType = {
   id: string
   companyName: string
-  iecCode: string | null
-  adCode: string | null
-  gstin: string | null
+  addressLine1: string
+  addressLine2: string | null
+  city: string
+  district: string
+  state: string
+  stateCode: string
+  pincode: string
+  gstin: string
+  iecCode: string
+  pan: string
   lutNumber: string | null
-  lutExpiryDate: Date | null
+  llpin: string | null
+  adCode: string
+  bankName: string
+  bankBranch: string
+  bankAddress: string
+  accountName: string
+  accountNumber: string
+  swiftCode: string
+  ifscCode: string
+  email: string
+  phone: string
+  website: string | null
+  createdAt: Date
   updatedAt: Date
   _count: CompanyProfileCountAggregateOutputType | null
   _min: CompanyProfileMinAggregateOutputType | null
@@ -200,22 +333,60 @@ export type CompanyProfileWhereInput = {
   NOT?: Prisma.CompanyProfileWhereInput | Prisma.CompanyProfileWhereInput[]
   id?: Prisma.StringFilter<"CompanyProfile"> | string
   companyName?: Prisma.StringFilter<"CompanyProfile"> | string
-  iecCode?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
-  adCode?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
-  gstin?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  addressLine1?: Prisma.StringFilter<"CompanyProfile"> | string
+  addressLine2?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  city?: Prisma.StringFilter<"CompanyProfile"> | string
+  district?: Prisma.StringFilter<"CompanyProfile"> | string
+  state?: Prisma.StringFilter<"CompanyProfile"> | string
+  stateCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  pincode?: Prisma.StringFilter<"CompanyProfile"> | string
+  gstin?: Prisma.StringFilter<"CompanyProfile"> | string
+  iecCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  pan?: Prisma.StringFilter<"CompanyProfile"> | string
   lutNumber?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
-  lutExpiryDate?: Prisma.DateTimeNullableFilter<"CompanyProfile"> | Date | string | null
+  llpin?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  adCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  bankName?: Prisma.StringFilter<"CompanyProfile"> | string
+  bankBranch?: Prisma.StringFilter<"CompanyProfile"> | string
+  bankAddress?: Prisma.StringFilter<"CompanyProfile"> | string
+  accountName?: Prisma.StringFilter<"CompanyProfile"> | string
+  accountNumber?: Prisma.StringFilter<"CompanyProfile"> | string
+  swiftCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  ifscCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  email?: Prisma.StringFilter<"CompanyProfile"> | string
+  phone?: Prisma.StringFilter<"CompanyProfile"> | string
+  website?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"CompanyProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CompanyProfile"> | Date | string
 }
 
 export type CompanyProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
-  iecCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  adCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  gstin?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  addressLine2?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  stateCode?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
+  gstin?: Prisma.SortOrder
+  iecCode?: Prisma.SortOrder
+  pan?: Prisma.SortOrder
   lutNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  lutExpiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  llpin?: Prisma.SortOrderInput | Prisma.SortOrder
+  adCode?: Prisma.SortOrder
+  bankName?: Prisma.SortOrder
+  bankBranch?: Prisma.SortOrder
+  bankAddress?: Prisma.SortOrder
+  accountName?: Prisma.SortOrder
+  accountNumber?: Prisma.SortOrder
+  swiftCode?: Prisma.SortOrder
+  ifscCode?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -225,22 +396,60 @@ export type CompanyProfileWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CompanyProfileWhereInput[]
   NOT?: Prisma.CompanyProfileWhereInput | Prisma.CompanyProfileWhereInput[]
   companyName?: Prisma.StringFilter<"CompanyProfile"> | string
-  iecCode?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
-  adCode?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
-  gstin?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  addressLine1?: Prisma.StringFilter<"CompanyProfile"> | string
+  addressLine2?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  city?: Prisma.StringFilter<"CompanyProfile"> | string
+  district?: Prisma.StringFilter<"CompanyProfile"> | string
+  state?: Prisma.StringFilter<"CompanyProfile"> | string
+  stateCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  pincode?: Prisma.StringFilter<"CompanyProfile"> | string
+  gstin?: Prisma.StringFilter<"CompanyProfile"> | string
+  iecCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  pan?: Prisma.StringFilter<"CompanyProfile"> | string
   lutNumber?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
-  lutExpiryDate?: Prisma.DateTimeNullableFilter<"CompanyProfile"> | Date | string | null
+  llpin?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  adCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  bankName?: Prisma.StringFilter<"CompanyProfile"> | string
+  bankBranch?: Prisma.StringFilter<"CompanyProfile"> | string
+  bankAddress?: Prisma.StringFilter<"CompanyProfile"> | string
+  accountName?: Prisma.StringFilter<"CompanyProfile"> | string
+  accountNumber?: Prisma.StringFilter<"CompanyProfile"> | string
+  swiftCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  ifscCode?: Prisma.StringFilter<"CompanyProfile"> | string
+  email?: Prisma.StringFilter<"CompanyProfile"> | string
+  phone?: Prisma.StringFilter<"CompanyProfile"> | string
+  website?: Prisma.StringNullableFilter<"CompanyProfile"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"CompanyProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CompanyProfile"> | Date | string
 }, "id">
 
 export type CompanyProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
-  iecCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  adCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  gstin?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  addressLine2?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  stateCode?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
+  gstin?: Prisma.SortOrder
+  iecCode?: Prisma.SortOrder
+  pan?: Prisma.SortOrder
   lutNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  lutExpiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  llpin?: Prisma.SortOrderInput | Prisma.SortOrder
+  adCode?: Prisma.SortOrder
+  bankName?: Prisma.SortOrder
+  bankBranch?: Prisma.SortOrder
+  bankAddress?: Prisma.SortOrder
+  accountName?: Prisma.SortOrder
+  accountNumber?: Prisma.SortOrder
+  swiftCode?: Prisma.SortOrder
+  ifscCode?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CompanyProfileCountOrderByAggregateInput
   _max?: Prisma.CompanyProfileMaxOrderByAggregateInput
@@ -253,121 +462,330 @@ export type CompanyProfileScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CompanyProfileScalarWhereWithAggregatesInput | Prisma.CompanyProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
   companyName?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
-  iecCode?: Prisma.StringNullableWithAggregatesFilter<"CompanyProfile"> | string | null
-  adCode?: Prisma.StringNullableWithAggregatesFilter<"CompanyProfile"> | string | null
-  gstin?: Prisma.StringNullableWithAggregatesFilter<"CompanyProfile"> | string | null
+  addressLine1?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  addressLine2?: Prisma.StringNullableWithAggregatesFilter<"CompanyProfile"> | string | null
+  city?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  district?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  state?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  stateCode?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  pincode?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  gstin?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  iecCode?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  pan?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
   lutNumber?: Prisma.StringNullableWithAggregatesFilter<"CompanyProfile"> | string | null
-  lutExpiryDate?: Prisma.DateTimeNullableWithAggregatesFilter<"CompanyProfile"> | Date | string | null
+  llpin?: Prisma.StringNullableWithAggregatesFilter<"CompanyProfile"> | string | null
+  adCode?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  bankName?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  bankBranch?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  bankAddress?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  accountName?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  accountNumber?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  swiftCode?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  ifscCode?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  email?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  phone?: Prisma.StringWithAggregatesFilter<"CompanyProfile"> | string
+  website?: Prisma.StringNullableWithAggregatesFilter<"CompanyProfile"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"CompanyProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CompanyProfile"> | Date | string
 }
 
 export type CompanyProfileCreateInput = {
   id?: string
   companyName: string
-  iecCode?: string | null
-  adCode?: string | null
-  gstin?: string | null
+  addressLine1: string
+  addressLine2?: string | null
+  city: string
+  district: string
+  state: string
+  stateCode: string
+  pincode: string
+  gstin: string
+  iecCode: string
+  pan: string
   lutNumber?: string | null
-  lutExpiryDate?: Date | string | null
+  llpin?: string | null
+  adCode: string
+  bankName: string
+  bankBranch: string
+  bankAddress: string
+  accountName: string
+  accountNumber: string
+  swiftCode: string
+  ifscCode: string
+  email: string
+  phone: string
+  website?: string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CompanyProfileUncheckedCreateInput = {
   id?: string
   companyName: string
-  iecCode?: string | null
-  adCode?: string | null
-  gstin?: string | null
+  addressLine1: string
+  addressLine2?: string | null
+  city: string
+  district: string
+  state: string
+  stateCode: string
+  pincode: string
+  gstin: string
+  iecCode: string
+  pan: string
   lutNumber?: string | null
-  lutExpiryDate?: Date | string | null
+  llpin?: string | null
+  adCode: string
+  bankName: string
+  bankBranch: string
+  bankAddress: string
+  accountName: string
+  accountNumber: string
+  swiftCode: string
+  ifscCode: string
+  email: string
+  phone: string
+  website?: string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CompanyProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
-  iecCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  stateCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  gstin?: Prisma.StringFieldUpdateOperationsInput | string
+  iecCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pan?: Prisma.StringFieldUpdateOperationsInput | string
   lutNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lutExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  llpin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adCode?: Prisma.StringFieldUpdateOperationsInput | string
+  bankName?: Prisma.StringFieldUpdateOperationsInput | string
+  bankBranch?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  accountName?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  swiftCode?: Prisma.StringFieldUpdateOperationsInput | string
+  ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CompanyProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
-  iecCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  stateCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  gstin?: Prisma.StringFieldUpdateOperationsInput | string
+  iecCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pan?: Prisma.StringFieldUpdateOperationsInput | string
   lutNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lutExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  llpin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adCode?: Prisma.StringFieldUpdateOperationsInput | string
+  bankName?: Prisma.StringFieldUpdateOperationsInput | string
+  bankBranch?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  accountName?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  swiftCode?: Prisma.StringFieldUpdateOperationsInput | string
+  ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CompanyProfileCreateManyInput = {
   id?: string
   companyName: string
-  iecCode?: string | null
-  adCode?: string | null
-  gstin?: string | null
+  addressLine1: string
+  addressLine2?: string | null
+  city: string
+  district: string
+  state: string
+  stateCode: string
+  pincode: string
+  gstin: string
+  iecCode: string
+  pan: string
   lutNumber?: string | null
-  lutExpiryDate?: Date | string | null
+  llpin?: string | null
+  adCode: string
+  bankName: string
+  bankBranch: string
+  bankAddress: string
+  accountName: string
+  accountNumber: string
+  swiftCode: string
+  ifscCode: string
+  email: string
+  phone: string
+  website?: string | null
+  createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CompanyProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
-  iecCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  stateCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  gstin?: Prisma.StringFieldUpdateOperationsInput | string
+  iecCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pan?: Prisma.StringFieldUpdateOperationsInput | string
   lutNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lutExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  llpin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adCode?: Prisma.StringFieldUpdateOperationsInput | string
+  bankName?: Prisma.StringFieldUpdateOperationsInput | string
+  bankBranch?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  accountName?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  swiftCode?: Prisma.StringFieldUpdateOperationsInput | string
+  ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CompanyProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
-  iecCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  adCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gstin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressLine1?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine2?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  stateCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pincode?: Prisma.StringFieldUpdateOperationsInput | string
+  gstin?: Prisma.StringFieldUpdateOperationsInput | string
+  iecCode?: Prisma.StringFieldUpdateOperationsInput | string
+  pan?: Prisma.StringFieldUpdateOperationsInput | string
   lutNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lutExpiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  llpin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adCode?: Prisma.StringFieldUpdateOperationsInput | string
+  bankName?: Prisma.StringFieldUpdateOperationsInput | string
+  bankBranch?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  accountName?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  swiftCode?: Prisma.StringFieldUpdateOperationsInput | string
+  ifscCode?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CompanyProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
-  iecCode?: Prisma.SortOrder
-  adCode?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  addressLine2?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  stateCode?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
   gstin?: Prisma.SortOrder
+  iecCode?: Prisma.SortOrder
+  pan?: Prisma.SortOrder
   lutNumber?: Prisma.SortOrder
-  lutExpiryDate?: Prisma.SortOrder
+  llpin?: Prisma.SortOrder
+  adCode?: Prisma.SortOrder
+  bankName?: Prisma.SortOrder
+  bankBranch?: Prisma.SortOrder
+  bankAddress?: Prisma.SortOrder
+  accountName?: Prisma.SortOrder
+  accountNumber?: Prisma.SortOrder
+  swiftCode?: Prisma.SortOrder
+  ifscCode?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  website?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CompanyProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
-  iecCode?: Prisma.SortOrder
-  adCode?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  addressLine2?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  stateCode?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
   gstin?: Prisma.SortOrder
+  iecCode?: Prisma.SortOrder
+  pan?: Prisma.SortOrder
   lutNumber?: Prisma.SortOrder
-  lutExpiryDate?: Prisma.SortOrder
+  llpin?: Prisma.SortOrder
+  adCode?: Prisma.SortOrder
+  bankName?: Prisma.SortOrder
+  bankBranch?: Prisma.SortOrder
+  bankAddress?: Prisma.SortOrder
+  accountName?: Prisma.SortOrder
+  accountNumber?: Prisma.SortOrder
+  swiftCode?: Prisma.SortOrder
+  ifscCode?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  website?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CompanyProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
-  iecCode?: Prisma.SortOrder
-  adCode?: Prisma.SortOrder
+  addressLine1?: Prisma.SortOrder
+  addressLine2?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  district?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  stateCode?: Prisma.SortOrder
+  pincode?: Prisma.SortOrder
   gstin?: Prisma.SortOrder
+  iecCode?: Prisma.SortOrder
+  pan?: Prisma.SortOrder
   lutNumber?: Prisma.SortOrder
-  lutExpiryDate?: Prisma.SortOrder
+  llpin?: Prisma.SortOrder
+  adCode?: Prisma.SortOrder
+  bankName?: Prisma.SortOrder
+  bankBranch?: Prisma.SortOrder
+  bankAddress?: Prisma.SortOrder
+  accountName?: Prisma.SortOrder
+  accountNumber?: Prisma.SortOrder
+  swiftCode?: Prisma.SortOrder
+  ifscCode?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  website?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -379,10 +797,6 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -392,48 +806,124 @@ export type DateTimeFieldUpdateOperationsInput = {
 export type CompanyProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   companyName?: boolean
-  iecCode?: boolean
-  adCode?: boolean
+  addressLine1?: boolean
+  addressLine2?: boolean
+  city?: boolean
+  district?: boolean
+  state?: boolean
+  stateCode?: boolean
+  pincode?: boolean
   gstin?: boolean
+  iecCode?: boolean
+  pan?: boolean
   lutNumber?: boolean
-  lutExpiryDate?: boolean
+  llpin?: boolean
+  adCode?: boolean
+  bankName?: boolean
+  bankBranch?: boolean
+  bankAddress?: boolean
+  accountName?: boolean
+  accountNumber?: boolean
+  swiftCode?: boolean
+  ifscCode?: boolean
+  email?: boolean
+  phone?: boolean
+  website?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["companyProfile"]>
 
 export type CompanyProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   companyName?: boolean
-  iecCode?: boolean
-  adCode?: boolean
+  addressLine1?: boolean
+  addressLine2?: boolean
+  city?: boolean
+  district?: boolean
+  state?: boolean
+  stateCode?: boolean
+  pincode?: boolean
   gstin?: boolean
+  iecCode?: boolean
+  pan?: boolean
   lutNumber?: boolean
-  lutExpiryDate?: boolean
+  llpin?: boolean
+  adCode?: boolean
+  bankName?: boolean
+  bankBranch?: boolean
+  bankAddress?: boolean
+  accountName?: boolean
+  accountNumber?: boolean
+  swiftCode?: boolean
+  ifscCode?: boolean
+  email?: boolean
+  phone?: boolean
+  website?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["companyProfile"]>
 
 export type CompanyProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   companyName?: boolean
-  iecCode?: boolean
-  adCode?: boolean
+  addressLine1?: boolean
+  addressLine2?: boolean
+  city?: boolean
+  district?: boolean
+  state?: boolean
+  stateCode?: boolean
+  pincode?: boolean
   gstin?: boolean
+  iecCode?: boolean
+  pan?: boolean
   lutNumber?: boolean
-  lutExpiryDate?: boolean
+  llpin?: boolean
+  adCode?: boolean
+  bankName?: boolean
+  bankBranch?: boolean
+  bankAddress?: boolean
+  accountName?: boolean
+  accountNumber?: boolean
+  swiftCode?: boolean
+  ifscCode?: boolean
+  email?: boolean
+  phone?: boolean
+  website?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["companyProfile"]>
 
 export type CompanyProfileSelectScalar = {
   id?: boolean
   companyName?: boolean
-  iecCode?: boolean
-  adCode?: boolean
+  addressLine1?: boolean
+  addressLine2?: boolean
+  city?: boolean
+  district?: boolean
+  state?: boolean
+  stateCode?: boolean
+  pincode?: boolean
   gstin?: boolean
+  iecCode?: boolean
+  pan?: boolean
   lutNumber?: boolean
-  lutExpiryDate?: boolean
+  llpin?: boolean
+  adCode?: boolean
+  bankName?: boolean
+  bankBranch?: boolean
+  bankAddress?: boolean
+  accountName?: boolean
+  accountNumber?: boolean
+  swiftCode?: boolean
+  ifscCode?: boolean
+  email?: boolean
+  phone?: boolean
+  website?: boolean
+  createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CompanyProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyName" | "iecCode" | "adCode" | "gstin" | "lutNumber" | "lutExpiryDate" | "updatedAt", ExtArgs["result"]["companyProfile"]>
+export type CompanyProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyName" | "addressLine1" | "addressLine2" | "city" | "district" | "state" | "stateCode" | "pincode" | "gstin" | "iecCode" | "pan" | "lutNumber" | "llpin" | "adCode" | "bankName" | "bankBranch" | "bankAddress" | "accountName" | "accountNumber" | "swiftCode" | "ifscCode" | "email" | "phone" | "website" | "createdAt" | "updatedAt", ExtArgs["result"]["companyProfile"]>
 
 export type $CompanyProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CompanyProfile"
@@ -441,11 +931,30 @@ export type $CompanyProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     companyName: string
-    iecCode: string | null
-    adCode: string | null
-    gstin: string | null
+    addressLine1: string
+    addressLine2: string | null
+    city: string
+    district: string
+    state: string
+    stateCode: string
+    pincode: string
+    gstin: string
+    iecCode: string
+    pan: string
     lutNumber: string | null
-    lutExpiryDate: Date | null
+    llpin: string | null
+    adCode: string
+    bankName: string
+    bankBranch: string
+    bankAddress: string
+    accountName: string
+    accountNumber: string
+    swiftCode: string
+    ifscCode: string
+    email: string
+    phone: string
+    website: string | null
+    createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["companyProfile"]>
   composites: {}
@@ -872,11 +1381,30 @@ export interface Prisma__CompanyProfileClient<T, Null = never, ExtArgs extends r
 export interface CompanyProfileFieldRefs {
   readonly id: Prisma.FieldRef<"CompanyProfile", 'String'>
   readonly companyName: Prisma.FieldRef<"CompanyProfile", 'String'>
-  readonly iecCode: Prisma.FieldRef<"CompanyProfile", 'String'>
-  readonly adCode: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly addressLine1: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly addressLine2: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly city: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly district: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly state: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly stateCode: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly pincode: Prisma.FieldRef<"CompanyProfile", 'String'>
   readonly gstin: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly iecCode: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly pan: Prisma.FieldRef<"CompanyProfile", 'String'>
   readonly lutNumber: Prisma.FieldRef<"CompanyProfile", 'String'>
-  readonly lutExpiryDate: Prisma.FieldRef<"CompanyProfile", 'DateTime'>
+  readonly llpin: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly adCode: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly bankName: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly bankBranch: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly bankAddress: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly accountName: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly accountNumber: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly swiftCode: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly ifscCode: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly email: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly phone: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly website: Prisma.FieldRef<"CompanyProfile", 'String'>
+  readonly createdAt: Prisma.FieldRef<"CompanyProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CompanyProfile", 'DateTime'>
 }
     

@@ -1,10 +1,10 @@
-import { Suspense } from 'react';
 import { getBuyers } from '@/app/actions/buyers';
 import { getProducts } from '@/app/actions/inventory';
 import { getOrders } from '@/app/actions/orders';
+import { Separator } from '@/components/ui/separator';
+import { Suspense } from 'react';
 import { InvoiceBuilder } from './invoice-builder';
 import { InvoiceList } from './invoice-list';
-import { Separator } from '@/components/ui/separator';
 
 async function InvoicePageContent() {
   const [buyersResult, productsResult, ordersResult] = await Promise.all([
