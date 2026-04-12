@@ -1,6 +1,6 @@
 'use client';
 
-import { createProduct, createVariant } from '@/app/actions/inventory';
+import { createProduct, createVariant, editProduct } from '@/app/actions/inventory';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -54,6 +54,8 @@ export function InventoryTable({ products }: { products: Product[] }) {
   const [productDialogOpen, setProductDialogOpen] = useState(false);
   const [variantDialogOpen, setVariantDialogOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editProductData, setEditProductData] = useState<Product | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -70,6 +72,25 @@ export function InventoryTable({ products }: { products: Product[] }) {
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
+    });
+  }
+
+  function handleEditProduct(formData: FormData) {
+    if (!editProductData) return;
+    startTransition(async () => {
+      await editProduct(editProductData.id, {
+        skuBase: formData.get('skuBase') as string,
+        description: formData.get('description') as string,
+        hsCode: formData.get('hsCode') as string,
+        unitPriceUsd: parseFloat(formData.get('unitPriceUsd') as string),
+        moq: parseInt(formData.get('moq') as string) || 1,
+        weightNet: parseFloat(formData.get('weightNet') as string),
+        weightGross: parseFloat(formData.get('weightGross') as string),
+        cbm: parseFloat(formData.get('cbm') as string),
+      });
+      setEditDialogOpen(false);
+      setEditProductData(null);
+      router.refresh();
     });
   }
 
@@ -288,7 +309,7 @@ export function InventoryTable({ products }: { products: Product[] }) {
                       <TableCell className="text-xs text-center tabular-nums">
                         {product.variants.length}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="flex gap-1">
                         <Button
                           variant="ghost"
                           size="sm"
@@ -302,7 +323,125 @@ export function InventoryTable({ products }: { products: Product[] }) {
                           <Plus className="h-3 w-3 mr-1" />
                           Variant
                         </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-6 text-[10px] px-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditProductData(product);
+                            setEditDialogOpen(true);
+                          }}
+                        >
+                          Edit
+                        </Button>
                       </TableCell>
+                      {/* Edit Product Dialog */}
+                      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+                        <DialogContent className="max-w-md">
+                          <DialogHeader>
+                            <DialogTitle className="text-sm">Edit Product</DialogTitle>
+                          </DialogHeader>
+                          {editProductData && (
+                            <form action={handleEditProduct} className="space-y-3">
+                              <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                  <Label className="text-xs">SKU Base</Label>
+                                  <Input
+                                    name="skuBase"
+                                    required
+                                    className="h-8 text-xs mt-1"
+                                    defaultValue={editProductData.skuBase}
+                                  />
+                                </div>
+                                <div>
+                                  <Label className="text-xs">HS Code</Label>
+                                  <Input
+                                    name="hsCode"
+                                    required
+                                    className="h-8 text-xs mt-1"
+                                    defaultValue={editProductData.hsCode}
+                                  />
+                                </div>
+                              </div>
+                              <div>
+                                <Label className="text-xs">Description</Label>
+                                <Input
+                                  name="description"
+                                  required
+                                  className="h-8 text-xs mt-1"
+                                  defaultValue={editProductData.description}
+                                />
+                              </div>
+                              <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                  <Label className="text-xs">Unit Price (USD)</Label>
+                                  <Input
+                                    name="unitPriceUsd"
+                                    type="number"
+                                    step="0.01"
+                                    required
+                                    className="h-8 text-xs mt-1"
+                                    defaultValue={editProductData.unitPriceUsd}
+                                  />
+                                </div>
+                                <div>
+                                  <Label className="text-xs">MOQ</Label>
+                                  <Input
+                                    name="moq"
+                                    type="number"
+                                    className="h-8 text-xs mt-1"
+                                    defaultValue={editProductData.moq}
+                                  />
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-3 gap-3">
+                                <div>
+                                  <Label className="text-xs">Net Wt (kg)</Label>
+                                  <Input
+                                    name="weightNet"
+                                    type="number"
+                                    step="0.01"
+                                    required
+                                    className="h-8 text-xs mt-1"
+                                    defaultValue={editProductData.weightNet}
+                                  />
+                                </div>
+                                <div>
+                                  <Label className="text-xs">Gross Wt (kg)</Label>
+                                  <Input
+                                    name="weightGross"
+                                    type="number"
+                                    step="0.01"
+                                    required
+                                    className="h-8 text-xs mt-1"
+                                    defaultValue={editProductData.weightGross}
+                                  />
+                                </div>
+                                <div>
+                                  <Label className="text-xs">CBM</Label>
+                                  <Input
+                                    name="cbm"
+                                    type="number"
+                                    step="0.001"
+                                    required
+                                    className="h-8 text-xs mt-1"
+                                    defaultValue={editProductData.cbm}
+                                  />
+                                </div>
+                              </div>
+                              <Button
+                                type="submit"
+                                size="sm"
+                                className="w-full h-8 text-xs"
+                                disabled={isPending}
+                              >
+                                {isPending ? 'Saving...' : 'Save Changes'}
+                              </Button>
+                            </form>
+                          )}
+                        </DialogContent>
+                      </Dialog>
                     </TableRow>
                     {/* Expanded variant rows */}
                     {isExpanded &&

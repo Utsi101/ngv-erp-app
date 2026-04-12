@@ -1,12 +1,13 @@
 'use client';
 
+import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
+import { Building2, FileText, LayoutDashboard, Package, Settings, Users } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Package, Users, FileText, Building2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Separator } from '@/components/ui/separator';
 
 const navigation = [
+  { name: 'Profile', href: '/profile', icon: Settings },
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Inventory', href: '/inventory', icon: Package },
   { name: 'Buyers', href: '/buyers', icon: Users },

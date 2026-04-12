@@ -45,13 +45,40 @@ enum FileType {
 // COMPLIANCE & CRM
 // ------------------------------------------------------
 model CompanyProfile {
-  id            String    @id @default(uuid())
-  companyName   String
-  iecCode       String? // 10-digit
-  adCode        String? // 14-digit
-  gstin         String? // 15-digit
+  id            String    @id @default(cuid())
+  // Identity
+  companyName     String
+  addressLine1  String
+  addressLine2  String?
+  city          String
+  district      String    // e.g., Kolkata
+  state         String    // e.g., West Bengal
+  stateCode     String    // e.g., 19
+  pincode       String
+
+  // Tax & Trade Licenses
+  gstin         String    // 15-digit
+  iecCode           String    // 10-digit
+  pan           String
   lutNumber     String?
-  lutExpiryDate DateTime?
+  llpin           String?
+
+  // Banking (Remittance Info)
+  adCode        String    // 14-digit
+  bankName      String
+  bankBranch    String
+  bankAddress   String
+  accountName   String
+  accountNumber String
+  swiftCode     String
+  ifscCode      String
+
+  // Contact
+  email         String
+  phone         String
+  website       String?
+
+  createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
 
