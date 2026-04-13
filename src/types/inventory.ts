@@ -15,8 +15,19 @@ export type ProductVariantWithOrderItems = ProductVariant & {
   orderItems: { id: string }[];
 };
 
-export type Product = {
+export type Product = CreateProductInput & {
   id: string;
+  createdAt: Date;
+  variants: ProductVariant[];
+};
+
+/** Product with variant order-item data (used in inventory table) */
+export type ProductWithVariantOrderItems = Omit<Product, 'variants'> & {
+  variants: ProductVariantWithOrderItems[];
+};
+
+/** Input for creating a new product */
+export type CreateProductInput = {
   skuBase: string;
   description: string;
   hsCode: string;
@@ -25,11 +36,16 @@ export type Product = {
   weightNet: number;
   weightGross: number;
   cbm: number;
-  createdAt: Date;
-  variants: ProductVariant[];
 };
 
-/** Product with variant order-item data (used in inventory table) */
-export type ProductWithVariantOrderItems = Omit<Product, 'variants'> & {
-  variants: ProductVariantWithOrderItems[];
+/** Input for editing a product (all fields optional) */
+export type EditProductInput = Partial<CreateProductInput>;
+
+/** Input for creating a new variant */
+export type CreateVariantInput = {
+  productId: string;
+  skuFull: string;
+  color?: string;
+  leatherType?: string;
+  stockAllocation?: number;
 };

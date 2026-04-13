@@ -31,3 +31,19 @@ export type CompanyProfile = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+/** Input for creating a company profile — derived from CompanyProfile, nullable fields become optional */
+export type CompanyProfileInput = Omit<
+  CompanyProfile,
+  'id' | 'createdAt' | 'updatedAt' | 'addressLine2' | 'lutNumber' | 'llpin' | 'website'
+> & {
+  addressLine2?: string;
+  lutNumber?: string;
+  llpin?: string;
+  website?: string;
+};
+
+/** Input for updating a company profile (all fields optional except district) */
+export type CompanyProfileUpdateInput = Partial<CompanyProfileInput> & {
+  district: string;
+};

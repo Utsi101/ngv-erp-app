@@ -23,7 +23,14 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatUSD } from '@/lib/format';
-import type { BuyerWithOrders, CompanyProfile, Incoterm, Product, ProductVariant } from '@/types';
+import type {
+  BuyerWithOrders,
+  CompanyProfile,
+  Incoterm,
+  OrderFormValues,
+  Product,
+  ProductVariant,
+} from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FileCheck, Plus, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -32,18 +39,6 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 // ---------- Validation Schema ----------
-type OrderFormValues = {
-  buyerId: string;
-  incoterm: Incoterm;
-  portOfLoading: string;
-  portOfDischarge: string;
-  vesselName: string;
-  appliedLutNumber: string;
-  freightCost: number;
-  insuranceCost: number;
-  items: { variantId: string; quantity: number }[];
-};
-
 const orderSchema = z.object({
   buyerId: z.string().min(1, 'Select a buyer'),
   incoterm: z.enum(['EXW', 'FOB', 'CIF', 'DAP']),

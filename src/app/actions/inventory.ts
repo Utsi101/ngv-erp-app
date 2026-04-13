@@ -1,6 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
+import type { CreateProductInput, CreateVariantInput, EditProductInput } from '@/types';
 
 export async function getProducts() {
   try {
@@ -15,16 +16,7 @@ export async function getProducts() {
   }
 }
 
-export async function createProduct(data: {
-  skuBase: string;
-  description: string;
-  hsCode: string;
-  unitPriceUsd: number;
-  moq: number;
-  weightNet: number;
-  weightGross: number;
-  cbm: number;
-}) {
+export async function createProduct(data: CreateProductInput) {
   try {
     const product = await db.product.create({ data });
     return { success: true as const, data: product };
@@ -34,13 +26,7 @@ export async function createProduct(data: {
   }
 }
 
-export async function createVariant(data: {
-  productId: string;
-  skuFull: string;
-  color?: string;
-  leatherType?: string;
-  stockAllocation?: number;
-}) {
+export async function createVariant(data: CreateVariantInput) {
   try {
     const variant = await db.productVariant.create({ data });
     return { success: true as const, data: variant };
@@ -63,19 +49,7 @@ export async function getProductsWithVariants() {
   }
 }
 
-export async function editProduct(
-  id: string,
-  data: {
-    skuBase?: string;
-    description?: string;
-    hsCode?: string;
-    unitPriceUsd?: number;
-    moq?: number;
-    weightNet?: number;
-    weightGross?: number;
-    cbm?: number;
-  }
-) {
+export async function editProduct(id: string, data: EditProductInput) {
   try {
     const product = await db.product.update({
       where: { id },

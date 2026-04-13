@@ -1,6 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
+import type { CreateBuyerInput } from '@/types';
 
 export async function getBuyers() {
   try {
@@ -17,15 +18,7 @@ export async function getBuyers() {
   }
 }
 
-export async function createBuyer(data: {
-  companyName: string;
-  contactPerson?: string;
-  billingAddress: string;
-  shippingAddress: string;
-  country: string;
-  taxId?: string;
-  preferredCurrency?: string;
-}) {
+export async function createBuyer(data: CreateBuyerInput) {
   try {
     const buyer = await db.buyer.create({ data });
     return { success: true as const, data: buyer };

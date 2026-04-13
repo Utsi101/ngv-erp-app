@@ -1,9 +1,8 @@
 import { getDashboardStats } from '@/app/actions/orders';
-import { Badge } from '@/components/ui/badge';
+import { OrderStatusBadge } from '@/components/orders/order-row';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { formatUSD } from '@/lib/format';
-import type { StatusConfig } from '@/types';
 import { Clock, DollarSign, Package, Ship } from 'lucide-react';
 import { Suspense } from 'react';
 
@@ -19,17 +18,6 @@ function DashboardSkeleton() {
     </div>
   );
 }
-
-const statusLabels: Record<string, StatusConfig> = {
-  DRAFT: { label: 'Draft', variant: 'outline' },
-  PROFORMA_SENT: { label: 'Proforma', variant: 'secondary' },
-  ADVANCE_RECEIVED: { label: 'Advance Rcvd', variant: 'default' },
-  IN_PRODUCTION: { label: 'Production', variant: 'default' },
-  READY_FOR_DISPATCH: { label: 'Ready', variant: 'default' },
-  SHIPPED: { label: 'Shipped', variant: 'default' },
-  PAYMENT_REALIZED: { label: 'Paid', variant: 'secondary' },
-  REGULATORY_CLOSED: { label: 'Closed', variant: 'secondary' },
-};
 
 async function DashboardContent() {
   const result = await getDashboardStats();
@@ -110,12 +98,7 @@ async function DashboardContent() {
                     <span className="text-xs font-mono tabular-nums">
                       {formatUSD(order.grandTotal)}
                     </span>
-                    <Badge
-                      variant={statusLabels[order.status]?.variant ?? 'outline'}
-                      className="text-[10px] px-1.5 py-0"
-                    >
-                      {statusLabels[order.status]?.label ?? order.status}
-                    </Badge>
+                    <OrderStatusBadge status={order.status} />
                   </div>
                 </div>
               ))}

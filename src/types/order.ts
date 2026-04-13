@@ -55,6 +55,26 @@ export type OrderWithBuyer = {
   items: OrderItem[];
 };
 
+// ── Action input types ─────────────────────────────────
+
+export type CreateOrderInput = {
+  buyerId: string;
+  incoterm: Incoterm;
+  portOfLoading?: string;
+  portOfDischarge?: string;
+  vesselName?: string;
+  appliedLutNumber?: string;
+  freightCost: number;
+  insuranceCost: number;
+  items: {
+    variantId: string;
+    quantity: number;
+  }[];
+};
+
+/** Form values for the order builder — all fields required (empty string for "none") */
+export type OrderFormValues = Required<CreateOrderInput>;
+
 // ── Order content (shared between modal & PDF) ────────
 
 export interface OrderContent {

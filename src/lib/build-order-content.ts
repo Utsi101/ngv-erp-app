@@ -1,5 +1,3 @@
-'use client';
-
 import { convertUsdToWords } from '@/lib/currency-to-words';
 import { formatOrderDate, safeValue } from '@/lib/order-utils';
 import type { CompanyProfile, OrderContent, OrderWithBuyer } from '@/types';
@@ -7,24 +5,19 @@ import type { CompanyProfile, OrderContent, OrderWithBuyer } from '@/types';
 const ORDER_DECLARATION =
   'We certify that the invoice is true and correct and represents the actual transaction relating to the goods described above. The goods are of the country/countries of origin indicated and the trade terms are indicated above.';
 
-export function useOrderContent(
+export function buildOrderContent(
   order: OrderWithBuyer,
-  companyProfile: CompanyProfile | null
+  companyProfile: CompanyProfile
 ): OrderContent {
-  if (!companyProfile) {
-    throw new Error('Company profile is required');
-  }
-
-  // Convert amount to words
   const getAmountInWords = (amount: number): string => {
     try {
       return convertUsdToWords(amount);
-    } catch (e) {
+    } catch {
       return 'Unable to convert amount';
     }
   };
 
-  const content: OrderContent = {
+  return {
     header: {
       exporter: {
         name: companyProfile.companyName,
@@ -82,6 +75,4 @@ export function useOrderContent(
       company: companyProfile.companyName,
     },
   };
-
-  return content;
 }

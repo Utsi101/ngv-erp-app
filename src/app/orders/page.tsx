@@ -1,4 +1,4 @@
-import { OrderList } from '@/components/order/orderList';
+import { OrderTable } from '@/components/orders/order-table';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
 
@@ -18,7 +18,7 @@ async function OrdersPageContent() {
 
   return (
     <div className="p-4 max-w-7xl justify-self-center w-full">
-      <OrderList orders={orders} companyProfile={companyProfile} />
+      <OrderTable orders={orders} companyProfile={companyProfile} />
     </div>
   );
 }

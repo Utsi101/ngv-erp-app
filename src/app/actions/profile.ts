@@ -1,6 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
+import type { CompanyProfileInput, CompanyProfileUpdateInput } from '@/types';
 
 export async function getCompanyProfile() {
   try {
@@ -12,32 +13,7 @@ export async function getCompanyProfile() {
   }
 }
 
-export async function createCompanyProfile(data: {
-  companyName: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  district: string;
-  state: string;
-  stateCode: string;
-  pincode: string;
-  gstin: string;
-  iecCode: string;
-  pan: string;
-  lutNumber?: string;
-  llpin?: string;
-  adCode: string;
-  bankName: string;
-  bankBranch: string;
-  bankAddress: string;
-  accountName: string;
-  accountNumber: string;
-  swiftCode: string;
-  ifscCode: string;
-  email: string;
-  phone: string;
-  website?: string;
-}) {
+export async function createCompanyProfile(data: CompanyProfileInput) {
   try {
     // Check if profile already exists
     const existing = await db.companyProfile.findFirst();
@@ -56,32 +32,7 @@ export async function createCompanyProfile(data: {
   }
 }
 
-export async function updateCompanyProfile(data: {
-  companyName?: string;
-  addressLine1?: string;
-  addressLine2?: string;
-  city?: string;
-  district: string;
-  state?: string;
-  stateCode?: string;
-  pincode?: string;
-  gstin?: string;
-  iecCode?: string;
-  pan?: string;
-  lutNumber?: string;
-  llpin?: string;
-  adCode?: string;
-  bankName?: string;
-  bankBranch?: string;
-  bankAddress?: string;
-  accountName?: string;
-  accountNumber?: string;
-  swiftCode?: string;
-  ifscCode?: string;
-  email?: string;
-  phone?: string;
-  website?: string;
-}) {
+export async function updateCompanyProfile(data: CompanyProfileUpdateInput) {
   try {
     const profile = await db.companyProfile.findFirst();
     if (!profile) {

@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
-import type { Incoterm } from '@/types';
+import type { CreateOrderInput } from '@/types';
 
 export async function getOrders() {
   try {
@@ -52,20 +52,7 @@ export async function getDashboardStats() {
   }
 }
 
-export async function createOrder(data: {
-  buyerId: string;
-  incoterm: Incoterm;
-  portOfLoading?: string;
-  portOfDischarge?: string;
-  vesselName?: string;
-  appliedLutNumber?: string;
-  freightCost: number;
-  insuranceCost: number;
-  items: {
-    variantId: string;
-    quantity: number;
-  }[];
-}) {
+export async function createOrder(data: CreateOrderInput) {
   try {
     // Fetch all variants with their product data for snapshot
     const variantIds = data.items.map((i) => i.variantId);

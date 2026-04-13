@@ -1,7 +1,7 @@
 import { getBuyers } from '@/app/actions/buyers';
 import { getProducts } from '@/app/actions/inventory';
 import { getCompanyProfile } from '@/app/actions/profile';
-import { OrderBuilder } from '@/components/order/orderBuilder';
+import { OrderBuilder } from '@/components/orders/order-builder';
 import { Suspense } from 'react';
 
 async function CreateOrderPageContent() {

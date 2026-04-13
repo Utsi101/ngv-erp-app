@@ -27,3 +27,13 @@ export type OrderSummary = {
 export type BuyerWithOrders = Buyer & {
   orders: OrderSummary[];
 };
+
+/** Input for creating a new buyer — derived from Buyer, nullable fields become optional */
+export type CreateBuyerInput = Omit<
+  Buyer,
+  'id' | 'createdAt' | 'updatedAt' | 'contactPerson' | 'taxId' | 'preferredCurrency'
+> & {
+  contactPerson?: string;
+  taxId?: string;
+  preferredCurrency?: string;
+};
