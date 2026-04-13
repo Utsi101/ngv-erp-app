@@ -23,7 +23,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatUSD } from '@/lib/format';
-import type { CompanyProfile } from '@/types/order';
+import type { BuyerWithOrders, CompanyProfile, Incoterm, Product, ProductVariant } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FileCheck, Plus, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -31,38 +31,10 @@ import { useEffect, useMemo, useState, useTransition } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-// ---------- Types ----------
-type Variant = {
-  id: string;
-  skuFull: string;
-  color: string | null;
-  leatherType: string | null;
-  stockAllocation: number;
-};
-
-type Product = {
-  id: string;
-  skuBase: string;
-  description: string;
-  hsCode: string;
-  unitPriceUsd: number;
-  weightNet: number;
-  weightGross: number;
-  cbm: number;
-  variants: Variant[];
-};
-
-type Buyer = {
-  id: string;
-  companyName: string;
-  country: string;
-  orders: unknown[];
-};
-
 // ---------- Validation Schema ----------
 type OrderFormValues = {
   buyerId: string;
-  incoterm: 'EXW' | 'FOB' | 'CIF' | 'DAP';
+  incoterm: Incoterm;
   portOfLoading: string;
   portOfDischarge: string;
   vesselName: string;
@@ -97,7 +69,7 @@ export function OrderBuilder({
   products,
   companyProfile,
 }: {
-  buyers: Buyer[];
+  buyers: BuyerWithOrders[];
   products: Product[];
   companyProfile: CompanyProfile | null;
 }) {
@@ -147,7 +119,7 @@ export function OrderBuilder({
 
   // Build a flat map: variantId -> { variant, product }
   const variantMap = useMemo(() => {
-    const map = new Map<string, { variant: Variant; product: Product }>();
+    const map = new Map<string, { variant: ProductVariant; product: Product }>();
     for (const product of products) {
       for (const variant of product.variants) {
         map.set(variant.id, { variant, product });
@@ -249,7 +221,7 @@ export function OrderBuilder({
               <Select
                 defaultValue="FOB"
                 onValueChange={(val) => {
-                  if (val) setValue('incoterm', String(val) as 'EXW' | 'FOB' | 'CIF' | 'DAP');
+                  if (val) setValue('incoterm', String(val) as Incoterm);
                 }}
               >
                 <SelectTrigger className="h-8 text-xs mt-1">

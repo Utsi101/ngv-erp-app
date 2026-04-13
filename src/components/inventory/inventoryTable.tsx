@@ -21,41 +21,19 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatUSD, formatWeight } from '@/lib/format';
+import type { ProductWithVariantOrderItems } from '@/types';
 import { ChevronDown, ChevronRight, Plus, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState, useTransition } from 'react';
 
-type Variant = {
-  id: string;
-  skuFull: string;
-  color: string | null;
-  leatherType: string | null;
-  stockAllocation: number;
-  orderItems: { id: string }[];
-};
-
-type Product = {
-  id: string;
-  skuBase: string;
-  description: string;
-  hsCode: string;
-  unitPriceUsd: number;
-  moq: number;
-  weightNet: number;
-  weightGross: number;
-  cbm: number;
-  createdAt: Date;
-  variants: Variant[];
-};
-
-export function InventoryTable({ products }: { products: Product[] }) {
+export function InventoryTable({ products }: { products: ProductWithVariantOrderItems[] }) {
   const [search, setSearch] = useState('');
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [productDialogOpen, setProductDialogOpen] = useState(false);
   const [variantDialogOpen, setVariantDialogOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editProductData, setEditProductData] = useState<Product | null>(null);
+  const [editProductData, setEditProductData] = useState<ProductWithVariantOrderItems | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 

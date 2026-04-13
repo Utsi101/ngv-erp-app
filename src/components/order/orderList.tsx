@@ -1,6 +1,6 @@
 'use client';
 
-import { OrderModal } from '@/components/order/OrderModal';
+import { OrderModal } from '@/components/order/orderModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,15 +14,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatUSD } from '@/lib/format';
-import type { CompanyProfile, OrderWithBuyer } from '@/types/order';
+import type { CompanyProfile, OrderWithBuyer, StatusConfig } from '@/types';
 import { FileText, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const statusLabels: Record<
-  string,
-  { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }
-> = {
+const statusLabels: Record<string, StatusConfig> = {
   DRAFT: { label: 'Draft', variant: 'outline' },
   PROFORMA_SENT: { label: 'Proforma', variant: 'secondary' },
   ADVANCE_RECEIVED: { label: 'Advance Rcvd', variant: 'default' },

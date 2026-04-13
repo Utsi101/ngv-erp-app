@@ -2,7 +2,7 @@
 
 import { useOrderContent } from '@/hooks/useOrderContent';
 import { formatCurrency } from '@/lib/order-utils';
-import type { CompanyProfile, OrderWithBuyer } from '@/types/order';
+import type { CompanyProfile, OrderWithBuyer } from '@/types';
 import { Document, Font, Page, PDFDownloadLink, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 // Register Helvetica font for cross-platform consistency

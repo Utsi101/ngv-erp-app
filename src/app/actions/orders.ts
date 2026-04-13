@@ -1,6 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
+import type { Incoterm } from '@/types';
 
 export async function getOrders() {
   try {
@@ -53,7 +54,7 @@ export async function getDashboardStats() {
 
 export async function createOrder(data: {
   buyerId: string;
-  incoterm: 'EXW' | 'FOB' | 'CIF' | 'DAP';
+  incoterm: Incoterm;
   portOfLoading?: string;
   portOfDischarge?: string;
   vesselName?: string;

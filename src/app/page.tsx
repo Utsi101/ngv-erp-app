@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { formatUSD } from '@/lib/format';
+import type { StatusConfig } from '@/types';
 import { Clock, DollarSign, Package, Ship } from 'lucide-react';
 import { Suspense } from 'react';
 
@@ -19,10 +20,7 @@ function DashboardSkeleton() {
   );
 }
 
-const statusLabels: Record<
-  string,
-  { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }
-> = {
+const statusLabels: Record<string, StatusConfig> = {
   DRAFT: { label: 'Draft', variant: 'outline' },
   PROFORMA_SENT: { label: 'Proforma', variant: 'secondary' },
   ADVANCE_RECEIVED: { label: 'Advance Rcvd', variant: 'default' },

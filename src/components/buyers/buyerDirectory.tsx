@@ -16,29 +16,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Search, Plus, Globe, FileText } from 'lucide-react';
 import { formatUSD } from '@/lib/format';
+import type { BuyerWithOrders } from '@/types';
 import { createBuyer } from '@/app/actions/buyers';
 import { useRouter } from 'next/navigation';
-
-type OrderSummary = {
-  id: string;
-  grandTotal: number;
-  status: string;
-  createdAt: Date;
-};
-
-type Buyer = {
-  id: string;
-  companyName: string;
-  contactPerson: string | null;
-  billingAddress: string;
-  shippingAddress: string;
-  country: string;
-  taxId: string | null;
-  preferredCurrency: string;
-  createdAt: Date;
-  updatedAt: Date;
-  orders: OrderSummary[];
-};
 
 const statusColors: Record<string, 'default' | 'secondary' | 'outline'> = {
   DRAFT: 'outline',
@@ -47,7 +27,7 @@ const statusColors: Record<string, 'default' | 'secondary' | 'outline'> = {
   PAYMENT_REALIZED: 'secondary',
 };
 
-export function BuyerDirectory({ buyers }: { buyers: Buyer[] }) {
+export function BuyerDirectory({ buyers }: { buyers: BuyerWithOrders[] }) {
   const [search, setSearch] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
