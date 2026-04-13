@@ -51,7 +51,7 @@ export async function getDashboardStats() {
   }
 }
 
-export async function createInvoice(data: {
+export async function createOrder(data: {
   buyerId: string;
   incoterm: 'EXW' | 'FOB' | 'CIF' | 'DAP';
   portOfLoading?: string;

@@ -1,13 +1,13 @@
 import { getCompanyProfile } from '@/app/actions/profile';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ProfileForm, type CompanyProfile } from './profile-form';
+import { ProfileForm, type CompanyProfile } from '../../components/profile/profileForm';
 
 export default async function ProfilePage() {
   const result = (await getCompanyProfile()) as { success: boolean; data: CompanyProfile | null };
   const profile = result.success ? result.data : null;
 
   return (
-    <div className="p-4 max-w-4xl justify-self-center">
+    <div className="p-4 max-w-7xl justify-self-center w-full">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Company Profile</h1>
         <p className="text-sm text-muted-foreground mt-1">

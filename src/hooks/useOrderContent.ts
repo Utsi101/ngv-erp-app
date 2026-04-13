@@ -1,20 +1,15 @@
 'use client';
 
-import { CompanyProfile } from '@/app/profile/profile-form';
-import { getAmountInWords } from '@/lib/currency-to-words';
-import { formatInvoiceDate, INVOICE_DECLARATION, safeValue } from '@/lib/invoice-utils';
-import type { OrderWithBuyer } from '@/types/invoice';
+import { convertUsdToWords } from '@/lib/currency-to-words';
+import { formatOrderDate, safeValue } from '@/lib/order-utils';
+import type { CompanyProfile, OrderWithBuyer } from '@/types/order';
 
-/**
- * Organized invoice content structure
- * Used by both web (InvoiceModal) and PDF (InvoicePDF) renderers
- */
-export interface InvoiceContent {
+export interface OrderContent {
   header: {
     exporter: {
       name: string;
       address1: string;
-      address2: string;
+      address2: string | null;
       gstin: string;
       iec: string;
       pan: string;
@@ -45,7 +40,7 @@ export interface InvoiceContent {
       portOfDischarge: string;
     };
   };
-  lineItems: Array<{
+  lineItems: {
     id: string;
     skuFull: string;
     quantity: number;
@@ -55,7 +50,7 @@ export interface InvoiceContent {
     grossWeight: number;
     unitPrice: number;
     lineTotal: number;
-  }>;
+  }[];
   totals: {
     freight: number;
     insurance: number;
@@ -68,34 +63,46 @@ export interface InvoiceContent {
   };
 }
 
-/**
- * Hook to organize invoice data into a structured content model
- * Eliminates duplication between web and PDF renderers
- */
-export function useInvoiceContent(
+const ORDER_DECLARATION =
+  'We certify that the invoice is true and correct and represents the actual transaction relating to the goods described above. The goods are of the country/countries of origin indicated and the trade terms are indicated above.';
+
+export function useOrderContent(
   order: OrderWithBuyer,
   companyProfile: CompanyProfile | null
-): InvoiceContent {
-  return {
+): OrderContent {
+  if (!companyProfile) {
+    throw new Error('Company profile is required');
+  }
+
+  // Convert amount to words
+  const getAmountInWords = (amount: number): string => {
+    try {
+      return convertUsdToWords(amount);
+    } catch (e) {
+      return 'Unable to convert amount';
+    }
+  };
+
+  const content: OrderContent = {
     header: {
       exporter: {
-        name: safeValue(companyProfile?.companyName),
-        address1: safeValue(companyProfile?.addressLine1),
-        address2: companyProfile?.addressLine2 ? `${companyProfile.addressLine2}` : '',
-        gstin: safeValue(companyProfile?.gstin),
-        iec: safeValue(companyProfile?.iecCode),
-        pan: safeValue(companyProfile?.pan),
-        adCode: safeValue(companyProfile?.adCode),
+        name: companyProfile.companyName,
+        address1: companyProfile.addressLine1,
+        address2: companyProfile.addressLine2,
+        gstin: companyProfile.gstin,
+        iec: companyProfile.iecCode,
+        pan: companyProfile.pan,
+        adCode: companyProfile.adCode,
       },
       invoiceDetails: {
         number: order.documentNumber,
-        date: formatInvoiceDate(order.createdAt),
-        contractNumber: safeValue(order.appliedLutNumber),
+        date: formatOrderDate(order.createdAt),
+        contractNumber: order.id.substring(0, 8).toUpperCase(),
       },
       complianceIds: {
-        iecCode: safeValue(companyProfile?.iecCode),
+        iecCode: companyProfile.iecCode,
         origin: 'INDIA',
-        destination: order.buyer.country,
+        destination: order.buyer.country || 'N/A',
       },
     },
     buyerShipping: {
@@ -106,7 +113,7 @@ export function useInvoiceContent(
       },
       shippingAddress: order.buyer.shippingAddress,
       logistics: {
-        incoterm: order.incoterm,
+        incoterm: safeValue(order.incoterm),
         vessel: safeValue(order.vesselName),
         portOfLoading: safeValue(order.portOfLoading),
         portOfDischarge: safeValue(order.portOfDischarge),
@@ -129,9 +136,11 @@ export function useInvoiceContent(
       grandTotal: order.grandTotal,
       amountInWords: getAmountInWords(order.grandTotal),
     },
-    declaration: INVOICE_DECLARATION,
+    declaration: ORDER_DECLARATION,
     signature: {
-      company: companyProfile?.companyName || 'Exporter',
+      company: companyProfile.companyName,
     },
   };
+
+  return content;
 }
