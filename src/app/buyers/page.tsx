@@ -1,6 +1,6 @@
 import { getBuyers } from '@/app/actions/buyers';
 import { Suspense } from 'react';
-import { BuyerDirectory } from '../../components/buyers/buyerDirectory';
+import { BuyerDirectory } from '@/components/buyers/BuyerDirectory';
 
 async function BuyerData() {
   const result = await getBuyers();

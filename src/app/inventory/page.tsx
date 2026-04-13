@@ -1,6 +1,6 @@
 import { getProductsWithVariants } from '@/app/actions/inventory';
 import { Suspense } from 'react';
-import { InventoryTable } from '../../components/inventory/inventoryTable';
+import { InventoryTable } from '@/components/inventory/InventoryTable';
 
 async function InventoryData() {
   const result = await getProductsWithVariants();

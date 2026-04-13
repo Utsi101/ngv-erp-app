@@ -1,4 +1,4 @@
-import { OrderList } from '@/components/order/orderList';
+import { OrderList } from '@/components/order/OrderList';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
 
