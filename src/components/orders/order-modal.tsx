@@ -1,7 +1,6 @@
 'use client';
 
-import { CommercialOrderPDF } from '@/components/order/orderPDF';
-import { useOrderContent } from '@/hooks/useOrderContent';
+import { buildOrderContent } from '@/lib/build-order-content';
 import { formatUSD } from '@/lib/format';
 import {
   ORDER_LAYOUT,
@@ -11,6 +10,15 @@ import {
 } from '@/lib/order-layout';
 import type { CompanyProfile, OrderWithBuyer } from '@/types';
 import { X } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const CommercialOrderPDF = dynamic(
+  () => import('@/components/orders/order-pdf').then((m) => m.CommercialOrderPDF),
+  {
+    ssr: false,
+    loading: () => <span className="text-xs text-muted-foreground">Loading PDF...</span>,
+  }
+);
 
 interface OrderModalProps {
   order: OrderWithBuyer;
@@ -19,7 +27,7 @@ interface OrderModalProps {
 }
 
 export function OrderModal({ order, companyProfile, onClose }: OrderModalProps) {
-  const content = useOrderContent(order, companyProfile!);
+  const content = buildOrderContent(order, companyProfile!);
 
   return (
     <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 p-4 overflow-y-auto flex-wrap ">

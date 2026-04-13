@@ -1,12 +1,11 @@
 'use client';
 
-import { useOrderContent } from '@/hooks/useOrderContent';
+import { buildOrderContent } from '@/lib/build-order-content';
 import { formatCurrency } from '@/lib/order-utils';
 import type { CompanyProfile, OrderWithBuyer } from '@/types';
 import { Document, Font, Page, PDFDownloadLink, Text, View } from '@react-pdf/renderer';
-import { pdfStyles as styles } from './orderPDF.styles';
+import { pdfStyles as styles } from './order-pdf.styles';
 
-// Register Helvetica font for cross-platform consistency
 Font.register({
   family: 'Helvetica',
   src: 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHAPUtQ8E0.ttf',
@@ -18,7 +17,7 @@ interface CommercialOrderPDFProps {
 }
 
 function CommercialOrderPDFContent({ order, companyProfile }: CommercialOrderPDFProps) {
-  const content = useOrderContent(order, companyProfile!);
+  const content = buildOrderContent(order, companyProfile!);
 
   return (
     <Document>
@@ -204,8 +203,6 @@ function CommercialOrderPDFContent({ order, companyProfile }: CommercialOrderPDF
   );
 }
 
-export interface OrderPDFProps extends CommercialOrderPDFProps {}
-
 export function CommercialOrderPDF({ order, companyProfile }: CommercialOrderPDFProps) {
   const filename = `Commercial_Order_${order.documentNumber.replace(/\D/g, '')}.pdf`;
 
@@ -215,7 +212,7 @@ export function CommercialOrderPDF({ order, companyProfile }: CommercialOrderPDF
       fileName={filename}
       className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition"
     >
-      {({ blob, url, loading, error }) => (loading ? 'Generating...' : '⬇ Download PDF')}
+      {({ loading }) => (loading ? 'Generating...' : '⬇ Download PDF')}
     </PDFDownloadLink>
   );
 }
