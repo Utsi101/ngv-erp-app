@@ -23,7 +23,7 @@ export function InvoiceModal({ order, companyProfile, onClose }: InvoiceModalPro
   const content = useInvoiceContent(order, companyProfile);
 
   return (
-    <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 p-4 overflow-y-auto flex-wrap">
+    <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 p-4 overflow-y-auto flex-wrap ">
       {/* Virtual A4 Page */}
       <div
         className={`${INVOICE_LAYOUT.page.backgroundColor} ${INVOICE_LAYOUT.page.maxWidth} aspect-[1/1.414] shadow-2xl relative`}

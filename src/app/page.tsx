@@ -1,10 +1,10 @@
-import { Suspense } from 'react';
 import { getDashboardStats } from '@/app/actions/orders';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Ship, DollarSign, Package, Clock } from 'lucide-react';
 import { formatUSD } from '@/lib/format';
+import { Clock, DollarSign, Package, Ship } from 'lucide-react';
+import { Suspense } from 'react';
 
 function DashboardSkeleton() {
   return (
@@ -131,7 +131,7 @@ async function DashboardContent() {
 
 export default function DashboardPage() {
   return (
-    <div className="p-4 max-w-6xl">
+    <div className="p-4 max-w-6xl justify-self-center w-full">
       <div className="mb-4">
         <h1 className="text-base font-semibold">Executive Dashboard</h1>
         <p className="text-xs text-muted-foreground">Export operations overview</p>

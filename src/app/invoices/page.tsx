@@ -37,7 +37,7 @@ async function InvoicePageContent() {
 
 export default function InvoicesPage() {
   return (
-    <div className="p-4 max-w-6xl">
+    <div className="p-4 max-w-6xl justify-self-center w-full">
       <div className="mb-4">
         <h1 className="text-base font-semibold">Invoice Builder</h1>
         <p className="text-xs text-muted-foreground">

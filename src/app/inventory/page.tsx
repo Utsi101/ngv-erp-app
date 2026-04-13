@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
 import { getProductsWithVariants } from '@/app/actions/inventory';
+import { Suspense } from 'react';
 import { InventoryTable } from './inventory-table';
 
 async function InventoryData() {
@@ -14,7 +14,7 @@ async function InventoryData() {
 
 export default function InventoryPage() {
   return (
-    <div className="p-4 max-w-7xl">
+    <div className="p-4 max-w-7xl justify-self-center w-full">
       <div className="mb-4">
         <h1 className="text-base font-semibold">Inventory Management</h1>
         <p className="text-xs text-muted-foreground">Products, variants, and stock levels</p>
