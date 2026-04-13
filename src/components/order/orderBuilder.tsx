@@ -1,7 +1,6 @@
 'use client';
 
-import { createInvoice } from '@/app/actions/orders';
-import { CompanyProfile } from '@/app/profile/profile-form';
+import { createOrder } from '@/app/actions/orders';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -24,6 +23,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatUSD } from '@/lib/format';
+import type { CompanyProfile } from '@/types/order';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FileCheck, Plus, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -60,7 +60,7 @@ type Buyer = {
 };
 
 // ---------- Validation Schema ----------
-type InvoiceFormValues = {
+type OrderFormValues = {
   buyerId: string;
   incoterm: 'EXW' | 'FOB' | 'CIF' | 'DAP';
   portOfLoading: string;
@@ -72,7 +72,7 @@ type InvoiceFormValues = {
   items: { variantId: string; quantity: number }[];
 };
 
-const invoiceSchema = z.object({
+const orderSchema = z.object({
   buyerId: z.string().min(1, 'Select a buyer'),
   incoterm: z.enum(['EXW', 'FOB', 'CIF', 'DAP']),
   portOfLoading: z.string().optional(),
@@ -89,10 +89,10 @@ const invoiceSchema = z.object({
       })
     )
     .min(1, 'Add at least one item'),
-}) satisfies z.ZodType<Partial<InvoiceFormValues>>;
+}) satisfies z.ZodType<Partial<OrderFormValues>>;
 
 // ---------- Component ----------
-export function InvoiceBuilder({
+export function OrderBuilder({
   buyers,
   products,
   companyProfile,
@@ -115,9 +115,9 @@ export function InvoiceBuilder({
     watch,
     setValue,
     formState: { errors },
-  } = useForm<InvoiceFormValues>({
+  } = useForm<OrderFormValues>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(invoiceSchema) as any,
+    resolver: zodResolver(orderSchema) as any,
     defaultValues: {
       buyerId: '',
       incoterm: 'FOB',
@@ -191,12 +191,12 @@ export function InvoiceBuilder({
   const subTotal = lineItemTotals.reduce((s, li) => s + li.lineTotal, 0);
   const grandTotal = subTotal + (Number(watchedFreight) || 0) + (Number(watchedInsurance) || 0);
 
-  function onSubmit(data: InvoiceFormValues) {
+  function onSubmit(data: OrderFormValues) {
     setSubmitError(null);
     setSubmitSuccess(false);
 
     startTransition(async () => {
-      const result = await createInvoice(data);
+      const result = await createOrder(data);
       if (result.success) {
         setSubmitSuccess(true);
         router.refresh();
@@ -212,7 +212,7 @@ export function InvoiceBuilder({
         <CardHeader className="px-4 pt-3 pb-2">
           <CardTitle className="text-xs font-medium flex items-center gap-1.5">
             <FileCheck className="h-3 w-3" />
-            New Export Invoice
+            New Export Order
           </CardTitle>
         </CardHeader>
         <Separator />
@@ -493,13 +493,13 @@ export function InvoiceBuilder({
               {submitError && <p className="text-[10px] text-destructive">{submitError}</p>}
               {submitSuccess && (
                 <p className="text-[10px] text-green-600 font-medium">
-                  Invoice created successfully!
+                  Order created successfully!
                 </p>
               )}
             </div>
             <Button type="submit" size="sm" className="h-8 text-xs gap-1.5" disabled={isPending}>
               <FileCheck className="h-3 w-3" />
-              {isPending ? 'Creating...' : 'Create Invoice'}
+              {isPending ? 'Creating...' : 'Create Order'}
             </Button>
           </div>
         </CardContent>

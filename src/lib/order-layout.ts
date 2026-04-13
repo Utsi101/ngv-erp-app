@@ -1,9 +1,9 @@
 /**
- * Invoice Layout Constants for Indian Customs-Compliant Commercial Invoice
+ * Order Layout Constants for Indian Customs-Compliant Commercial Order
  * Based on A4 portrait standard with percentage-based column widths
  */
 
-export const INVOICE_LAYOUT = {
+export const ORDER_LAYOUT = {
   // Page dimensions
   page: {
     aspectRatio: '1/1.414', // A4 aspect ratio
@@ -24,16 +24,16 @@ export const INVOICE_LAYOUT = {
 
   // Header sections (3-column layout)
   header: {
-    exporter: '40%', // Left: Exporter Details
-    invoiceDetails: '30%', // Middle: Invoice No & Date
-    complianceIds: '30%', // Right: Compliance & Origin/Destination
+    exporter: '25%', // Left: Exporter Details
+    orderDetails: '25%', // Middle: Order No & Date
+    complianceIds: '50%', // Right: Compliance & Origin/Destination
   },
 
   // Buyer & Shipping sections (3-column layout, mirrors header)
   buyerShipping: {
-    consignee: '40%', // Left: Consignee Details
-    shippingAddress: '30%', // Middle: Shipping Address
-    logistics: '30%', // Right: Logistics Details
+    consignee: '25%', // Left: Consignee Details
+    shippingAddress: '25%', // Middle: Shipping Address
+    logistics: '50%', // Right: Logistics Details
   },
 
   // Typography
@@ -67,22 +67,20 @@ export const INVOICE_LAYOUT = {
  * Helper function to calculate column width in grid
  * Returns Tailwind width class or percentage for inline styles
  */
-export function getColumnWidth(columnKey: keyof typeof INVOICE_LAYOUT.columns): string {
-  return INVOICE_LAYOUT.columns[columnKey];
+export function getColumnWidth(columnKey: keyof typeof ORDER_LAYOUT.columns): string {
+  return ORDER_LAYOUT.columns[columnKey];
 }
 
 /**
  * Helper to get header section widths
  */
-export function getHeaderWidth(sectionKey: keyof typeof INVOICE_LAYOUT.header): string {
-  return INVOICE_LAYOUT.header[sectionKey];
+export function getHeaderWidth(sectionKey: keyof typeof ORDER_LAYOUT.header): string {
+  return ORDER_LAYOUT.header[sectionKey];
 }
 
 /**
  * Helper to get buyer/shipping section widths
  */
-export function getBuyerShippingWidth(
-  sectionKey: keyof typeof INVOICE_LAYOUT.buyerShipping
-): string {
-  return INVOICE_LAYOUT.buyerShipping[sectionKey];
+export function getBuyerShippingWidth(sectionKey: keyof typeof ORDER_LAYOUT.buyerShipping): string {
+  return ORDER_LAYOUT.buyerShipping[sectionKey];
 }

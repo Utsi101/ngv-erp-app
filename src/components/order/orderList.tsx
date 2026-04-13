@@ -1,8 +1,8 @@
 'use client';
 
-import { CompanyProfile } from '@/app/profile/profile-form';
-import { InvoiceModal } from '@/components/invoice-modal';
+import { OrderModal } from '@/components/order/orderModal';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -14,47 +14,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatUSD } from '@/lib/format';
-import { FileText } from 'lucide-react';
+import type { CompanyProfile, OrderWithBuyer } from '@/types/order';
+import { FileText, Plus } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
-
-type OrderWithBuyer = {
-  id: string;
-  documentNumber: string;
-  status: string;
-  incoterm: string;
-  portOfLoading: string | null;
-  portOfDischarge: string | null;
-  vesselName: string | null;
-  subTotal: number;
-  freightCost: number;
-  insuranceCost: number;
-  grandTotal: number;
-  appliedLutNumber: string | null;
-  createdAt: Date;
-  buyer: {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-    companyName: string;
-    contactPerson: string | null;
-    billingAddress: string;
-    shippingAddress: string;
-    country: string;
-    taxId: string | null;
-    preferredCurrency: string;
-  };
-  items: {
-    id: string;
-    quantity: number;
-    historicalDescription: string;
-    historicalHsCode: string;
-    historicalUnitPrice: number;
-    historicalNetWeight: number;
-    historicalGrossWeight: number;
-    skuFull?: string;
-    lineTotal: number;
-  }[];
-};
 
 const statusLabels: Record<
   string,
@@ -70,7 +33,7 @@ const statusLabels: Record<
   REGULATORY_CLOSED: { label: 'Closed', variant: 'secondary' },
 };
 
-export function InvoiceList({
+export function OrderList({
   orders,
   companyProfile,
 }: {
@@ -83,7 +46,7 @@ export function InvoiceList({
     return (
       <Card>
         <CardContent className="py-8 text-center">
-          <p className="text-xs text-muted-foreground">No invoices created yet</p>
+          <p className="text-xs text-muted-foreground">No orders created yet</p>
         </CardContent>
       </Card>
     );
@@ -92,18 +55,24 @@ export function InvoiceList({
   return (
     <>
       <Card>
-        <CardHeader className="px-4 pt-3 pb-2">
+        <CardHeader className="px-4 pt-3 pb-2 flex flex-row items-center justify-between space-y-0">
           <CardTitle className="text-xs font-medium flex items-center gap-1.5">
             <FileText className="h-3 w-3" />
-            Invoice History
+            Order History
           </CardTitle>
+          <Link href="/orders/create">
+            <Button size="sm" className="h-7 text-[11px]">
+              <Plus className="h-3 w-3 mr-1" />
+              New Order
+            </Button>
+          </Link>
         </CardHeader>
         <Separator />
         <CardContent className="px-0 pb-0">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead className="text-[10px] uppercase tracking-wider">Invoice #</TableHead>
+                <TableHead className="text-[10px] uppercase tracking-wider">Order #</TableHead>
                 <TableHead className="text-[10px] uppercase tracking-wider">Buyer</TableHead>
                 <TableHead className="text-[10px] uppercase tracking-wider">Incoterm</TableHead>
                 <TableHead className="text-[10px] uppercase tracking-wider">Vessel</TableHead>
@@ -173,9 +142,9 @@ export function InvoiceList({
         </CardContent>
       </Card>
 
-      {/* Invoice Detail Modal */}
+      {/* Order Detail Modal */}
       {selectedOrder && (
-        <InvoiceModal
+        <OrderModal
           order={selectedOrder}
           companyProfile={companyProfile}
           onClose={() => setSelectedOrder(null)}

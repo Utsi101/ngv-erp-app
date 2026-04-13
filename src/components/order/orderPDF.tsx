@@ -1,9 +1,8 @@
 'use client';
 
-import { CompanyProfile } from '@/app/profile/profile-form';
-import { useInvoiceContent } from '@/hooks/useInvoiceContent';
-import { formatCurrency } from '@/lib/invoice-utils';
-import type { OrderWithBuyer } from '@/types/invoice';
+import { useOrderContent } from '@/hooks/useOrderContent';
+import { formatCurrency } from '@/lib/order-utils';
+import type { CompanyProfile, OrderWithBuyer } from '@/types/order';
 import { Document, Font, Page, PDFDownloadLink, StyleSheet, Text, View } from '@react-pdf/renderer';
 
 // Register Helvetica font for cross-platform consistency
@@ -251,19 +250,19 @@ const styles = StyleSheet.create({
   },
 });
 
-interface CommercialInvoicePDFProps {
+interface CommercialOrderPDFProps {
   order: OrderWithBuyer;
   companyProfile: CompanyProfile | null;
 }
 
-function CommercialInvoicePDFContent({ order, companyProfile }: CommercialInvoicePDFProps) {
-  const content = useInvoiceContent(order, companyProfile);
+function CommercialOrderPDFContent({ order, companyProfile }: CommercialOrderPDFProps) {
+  const content = useOrderContent(order, companyProfile!);
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* TITLE */}
-        <Text style={styles.title}>COMMERCIAL INVOICE</Text>
+        <Text style={styles.title}>COMMERCIAL ORDER</Text>
 
         {/* HEADER SECTION - 3 COLUMNS */}
         <View style={styles.headerContainer}>
@@ -292,9 +291,9 @@ function CommercialInvoicePDFContent({ order, companyProfile }: CommercialInvoic
             </Text>
           </View>
 
-          {/* Middle Column: Invoice Details */}
+          {/* Middle Column: Order Details */}
           <View style={{ ...styles.headerColumn, width: '25%' }}>
-            <Text style={styles.headerLabel}>INVOICE NO. & DATE</Text>
+            <Text style={styles.headerLabel}>ORDER NO. & DATE</Text>
             <Text style={styles.headerBold}>{content.header.invoiceDetails.number}</Text>
             <Text style={styles.headerText}>{content.header.invoiceDetails.date}</Text>
             <Text style={{ ...styles.headerLabel, marginTop: 12 }}>CONTRACT NO. & DATE</Text>
@@ -443,14 +442,14 @@ function CommercialInvoicePDFContent({ order, companyProfile }: CommercialInvoic
   );
 }
 
-export interface InvoicePDFProps extends CommercialInvoicePDFProps {}
+export interface OrderPDFProps extends CommercialOrderPDFProps {}
 
-export function CommercialInvoicePDF({ order, companyProfile }: CommercialInvoicePDFProps) {
-  const filename = `Commercial_Invoice_${order.documentNumber.replace(/\D/g, '')}.pdf`;
+export function CommercialOrderPDF({ order, companyProfile }: CommercialOrderPDFProps) {
+  const filename = `Commercial_Order_${order.documentNumber.replace(/\D/g, '')}.pdf`;
 
   return (
     <PDFDownloadLink
-      document={<CommercialInvoicePDFContent order={order} companyProfile={companyProfile} />}
+      document={<CommercialOrderPDFContent order={order} companyProfile={companyProfile} />}
       fileName={filename}
       className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md bg-blue-600 text-white text-xs font-medium hover:bg-blue-700 transition"
     >

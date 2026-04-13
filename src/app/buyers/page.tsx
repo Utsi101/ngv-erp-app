@@ -1,6 +1,6 @@
 import { getBuyers } from '@/app/actions/buyers';
 import { Suspense } from 'react';
-import { BuyerDirectory } from './buyer-directory';
+import { BuyerDirectory } from '../../components/buyers/buyerDirectory';
 
 async function BuyerData() {
   const result = await getBuyers();
@@ -14,7 +14,7 @@ async function BuyerData() {
 
 export default function BuyersPage() {
   return (
-    <div className="p-4 max-w-6xl justify-self-center w-full">
+    <div className="p-4 max-w-7xl justify-self-center w-full">
       <div className="mb-4">
         <h1 className="text-base font-semibold">Buyer CRM</h1>
         <p className="text-xs text-muted-foreground">
