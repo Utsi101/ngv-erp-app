@@ -1,6 +1,6 @@
 'use client';
 
-import { OrderModal } from '@/components/order/orderModal';
+import { OrderModal } from '@/components/order/OrderModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

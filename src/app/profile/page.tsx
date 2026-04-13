@@ -1,6 +1,6 @@
 import { getCompanyProfile } from '@/app/actions/profile';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ProfileForm, type CompanyProfile } from '../../components/profile/profileForm';
+import { ProfileForm, type CompanyProfile } from '@/components/profile/ProfileForm';
 
 export default async function ProfilePage() {
   const result = (await getCompanyProfile()) as { success: boolean; data: CompanyProfile | null };

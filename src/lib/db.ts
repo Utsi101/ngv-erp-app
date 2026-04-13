@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../prisma/prisma-client/client'; // Adjust path to your generated folder
+import { PrismaClient } from '@/prisma/prisma-client/client'; // Adjust path to your generated folder
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 

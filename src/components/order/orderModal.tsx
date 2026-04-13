@@ -1,6 +1,6 @@
 'use client';
 
-import { CommercialOrderPDF } from '@/components/order/orderPDF';
+import { CommercialOrderPDF } from '@/components/order/OrderPDF';
 import { useOrderContent } from '@/hooks/useOrderContent';
 import { formatUSD } from '@/lib/format';
 import {
