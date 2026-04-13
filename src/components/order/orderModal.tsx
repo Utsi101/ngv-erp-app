@@ -1,6 +1,6 @@
 'use client';
 
-import { CommercialOrderPDF } from '@/components/order/OrderPDF';
+import { CommercialOrderPDF } from '@/components/order/orderPDF';
 import { useOrderContent } from '@/hooks/useOrderContent';
 import { formatUSD } from '@/lib/format';
 import {
@@ -9,7 +9,7 @@ import {
   getColumnWidth,
   getHeaderWidth,
 } from '@/lib/order-layout';
-import type { CompanyProfile, OrderWithBuyer } from '@/types/order';
+import type { CompanyProfile, OrderWithBuyer } from '@/types';
 import { X } from 'lucide-react';
 
 interface OrderModalProps {

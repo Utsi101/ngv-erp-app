@@ -2,66 +2,7 @@
 
 import { convertUsdToWords } from '@/lib/currency-to-words';
 import { formatOrderDate, safeValue } from '@/lib/order-utils';
-import type { CompanyProfile, OrderWithBuyer } from '@/types/order';
-
-export interface OrderContent {
-  header: {
-    exporter: {
-      name: string;
-      address1: string;
-      address2: string | null;
-      gstin: string;
-      iec: string;
-      pan: string;
-      adCode: string;
-    };
-    invoiceDetails: {
-      number: string;
-      date: string;
-      contractNumber: string;
-    };
-    complianceIds: {
-      iecCode: string;
-      origin: string;
-      destination: string;
-    };
-  };
-  buyerShipping: {
-    consignee: {
-      companyName: string;
-      contactPerson: string;
-      billingAddress: string;
-    };
-    shippingAddress: string;
-    logistics: {
-      incoterm: string;
-      vessel: string;
-      portOfLoading: string;
-      portOfDischarge: string;
-    };
-  };
-  lineItems: {
-    id: string;
-    skuFull: string;
-    quantity: number;
-    description: string;
-    hsCode: string;
-    netWeight: number;
-    grossWeight: number;
-    unitPrice: number;
-    lineTotal: number;
-  }[];
-  totals: {
-    freight: number;
-    insurance: number;
-    grandTotal: number;
-    amountInWords: string;
-  };
-  declaration: string;
-  signature: {
-    company: string;
-  };
-}
+import type { CompanyProfile, OrderContent, OrderWithBuyer } from '@/types';
 
 const ORDER_DECLARATION =
   'We certify that the invoice is true and correct and represents the actual transaction relating to the goods described above. The goods are of the country/countries of origin indicated and the trade terms are indicated above.';
