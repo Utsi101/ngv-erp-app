@@ -1,15 +1,12 @@
 'use client';
 
-import { useState, useTransition, useMemo } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { createInvoice } from '@/app/actions/orders';
+import { CompanyProfile } from '@/app/profile/profile-form';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import {
   Select,
   SelectContent,
@@ -17,18 +14,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@/components/ui/table';
-import { Plus, Trash2, FileCheck } from 'lucide-react';
 import { formatUSD } from '@/lib/format';
-import { createInvoice } from '@/app/actions/orders';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FileCheck, Plus, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 // ---------- Types ----------
 type Variant = {
@@ -91,10 +92,20 @@ const invoiceSchema = z.object({
 }) satisfies z.ZodType<Partial<InvoiceFormValues>>;
 
 // ---------- Component ----------
-export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products: Product[] }) {
+export function InvoiceBuilder({
+  buyers,
+  products,
+  companyProfile,
+}: {
+  buyers: Buyer[];
+  products: Product[];
+  companyProfile: CompanyProfile | null;
+}) {
   const [isPending, startTransition] = useTransition();
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [selectedBuyerId, setSelectedBuyerId] = useState<string>('');
+  const [selectedVariantIds, setSelectedVariantIds] = useState<Record<number, string>>({});
   const router = useRouter();
 
   const {
@@ -113,7 +124,7 @@ export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products
       portOfLoading: '',
       portOfDischarge: '',
       vesselName: '',
-      appliedLutNumber: '',
+      appliedLutNumber: companyProfile?.lutNumber || '',
       freightCost: 0,
       insuranceCost: 0,
       items: [],
@@ -124,6 +135,15 @@ export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products
     control,
     name: 'items',
   });
+
+  // Auto-fill port of loading and LUT from company profile on mount
+  useEffect(() => {
+    if (companyProfile) {
+      if (companyProfile.lutNumber) {
+        setValue('appliedLutNumber', companyProfile.lutNumber);
+      }
+    }
+  }, [companyProfile, setValue]);
 
   // Build a flat map: variantId -> { variant, product }
   const variantMap = useMemo(() => {
@@ -149,6 +169,8 @@ export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products
     [products]
   );
 
+  const selectedBuyer = buyers.find((b) => b.id === selectedBuyerId);
+
   const watchedItems = watch('items');
   const watchedFreight = watch('freightCost');
   const watchedInsurance = watch('insuranceCost');
@@ -156,12 +178,13 @@ export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products
   // Auto-calculate totals
   const lineItemTotals = watchedItems.map((item) => {
     const info = variantMap.get(item.variantId);
-    if (!info) return { unitPrice: 0, lineTotal: 0, description: '—', hsCode: '—' };
+    if (!info) return { unitPrice: 0, lineTotal: 0, description: '—', hsCode: '—', skuFull: '—' };
     return {
       unitPrice: info.product.unitPriceUsd,
       lineTotal: info.product.unitPriceUsd * (item.quantity || 0),
       description: info.product.description,
       hsCode: info.product.hsCode,
+      skuFull: info.variant.skuFull,
     };
   });
 
@@ -199,8 +222,10 @@ export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products
             <div className="col-span-2">
               <Label className="text-xs">Buyer</Label>
               <Select
+                value={selectedBuyer?.companyName || selectedBuyerId}
                 onValueChange={(val) => {
-                  if (val) setValue('buyerId', String(val));
+                  setSelectedBuyerId(val ?? '');
+                  setValue('buyerId', val ?? '');
                 }}
               >
                 <SelectTrigger className="h-8 text-xs mt-1">
@@ -331,16 +356,25 @@ export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products
                   <TableBody>
                     {fields.map((field, index) => {
                       const info = lineItemTotals[index];
+                      const selectedVariantId = selectedVariantIds[index];
                       return (
                         <TableRow key={field.id}>
                           <TableCell className="py-1">
                             <Select
+                              value={selectedVariantId || ''}
                               onValueChange={(val) => {
-                                if (val) setValue(`items.${index}.variantId`, String(val));
+                                if (val) {
+                                  setSelectedVariantIds((prev) => ({ ...prev, [index]: val }));
+                                  setValue(`items.${index}.variantId`, String(val));
+                                }
                               }}
                             >
                               <SelectTrigger className="h-7 text-xs">
-                                <SelectValue placeholder="Select variant..." />
+                                {selectedVariantId && info?.skuFull ? (
+                                  <span className="text-xs">{info.skuFull}</span>
+                                ) : (
+                                  <SelectValue placeholder="Select variant..." />
+                                )}
                               </SelectTrigger>
                               <SelectContent>
                                 {allVariants.map((v) => (
@@ -381,7 +415,14 @@ export function InvoiceBuilder({ buyers, products }: { buyers: Buyer[]; products
                               variant="ghost"
                               size="sm"
                               className="h-6 w-6 p-0"
-                              onClick={() => remove(index)}
+                              onClick={() => {
+                                remove(index);
+                                setSelectedVariantIds((prev) => {
+                                  const newState = { ...prev };
+                                  delete newState[index];
+                                  return newState;
+                                });
+                              }}
                             >
                               <Trash2 className="h-3 w-3 text-destructive" />
                             </Button>

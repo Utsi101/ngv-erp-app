@@ -84,7 +84,7 @@ export async function createInvoice(data: {
 
       return {
         variantId: item.variantId,
-        variantFullSku: variant.skuFull,
+        skuFull: variant.skuFull,
         quantity: item.quantity,
         historicalUnitPrice: variant.product.unitPriceUsd,
         historicalDescription: variant.product.description,

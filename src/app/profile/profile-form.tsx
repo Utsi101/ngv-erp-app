@@ -26,7 +26,7 @@ export type CompanyProfile = {
   id: string;
   companyName: string;
   addressLine1: string;
-  addressLine2?: string;
+  addressLine2: string | null;
   city: string;
   district: string;
   state: string;
@@ -35,8 +35,8 @@ export type CompanyProfile = {
   gstin: string;
   iecCode: string;
   pan: string;
-  lutNumber?: string;
-  llpin?: string;
+  lutNumber: string | null;
+  llpin: string | null;
   adCode: string;
   bankName: string;
   bankBranch: string;
@@ -47,9 +47,9 @@ export type CompanyProfile = {
   ifscCode: string;
   email: string;
   phone: string;
-  website?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  website: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export function ProfileForm({ initialData }: { initialData: CompanyProfile | null }) {

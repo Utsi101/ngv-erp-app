@@ -1,16 +1,18 @@
 import { getBuyers } from '@/app/actions/buyers';
 import { getProducts } from '@/app/actions/inventory';
 import { getOrders } from '@/app/actions/orders';
+import { getCompanyProfile } from '@/app/actions/profile';
 import { Separator } from '@/components/ui/separator';
 import { Suspense } from 'react';
 import { InvoiceBuilder } from './invoice-builder';
 import { InvoiceList } from './invoice-list';
 
 async function InvoicePageContent() {
-  const [buyersResult, productsResult, ordersResult] = await Promise.all([
+  const [buyersResult, productsResult, ordersResult, profileResult] = await Promise.all([
     getBuyers(),
     getProducts(),
     getOrders(),
+    getCompanyProfile(),
   ]);
 
   if (!buyersResult.success || !productsResult.success || !ordersResult.success) {
@@ -19,9 +21,16 @@ async function InvoicePageContent() {
 
   return (
     <div className="space-y-6">
-      <InvoiceBuilder buyers={buyersResult.data} products={productsResult.data} />
+      <InvoiceBuilder
+        buyers={buyersResult.data}
+        products={productsResult.data}
+        companyProfile={profileResult.success ? profileResult.data : null}
+      />
       <Separator />
-      <InvoiceList orders={ordersResult.data} />
+      <InvoiceList
+        orders={ordersResult.data}
+        companyProfile={profileResult.success ? profileResult.data : null}
+      />
     </div>
   );
 }
