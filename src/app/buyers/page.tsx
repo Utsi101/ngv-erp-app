@@ -1,18 +1,13 @@
 import { getBuyers } from '@/app/actions/buyers';
-import { Suspense } from 'react';
 import { BuyerDirectory } from '@/components/buyers/buyerDirectory';
 
-async function BuyerData() {
+export default async function BuyersPage() {
   const result = await getBuyers();
 
   if (!result.success) {
     return <p className="text-xs text-destructive">Failed to load buyers.</p>;
   }
 
-  return <BuyerDirectory buyers={result.data} />;
-}
-
-export default function BuyersPage() {
   return (
     <div className="p-4 max-w-7xl justify-self-center w-full">
       <div className="mb-4">
@@ -21,17 +16,7 @@ export default function BuyersPage() {
           International buyer directory and order history
         </p>
       </div>
-      <Suspense
-        fallback={
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-40 bg-muted animate-pulse rounded-lg" />
-            ))}
-          </div>
-        }
-      >
-        <BuyerData />
-      </Suspense>
+      <BuyerDirectory buyers={result.data} />
     </div>
   );
 }
