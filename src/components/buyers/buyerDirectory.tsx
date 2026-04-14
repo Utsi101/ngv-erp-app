@@ -106,11 +106,11 @@ export function BuyerDirectory({ buyers }: { buyers: BuyerWithOrders[] }) {
               </div>
               <div>
                 <Label className="text-xs">Billing Address</Label>
-                <Textarea name="billingAddress" required className="text-xs mt-1 min-h-[60px]" />
+                <Textarea name="billingAddress" required className="text-xs mt-1 min-h-15" />
               </div>
               <div>
                 <Label className="text-xs">Shipping Address</Label>
-                <Textarea name="shippingAddress" required className="text-xs mt-1 min-h-[60px]" />
+                <Textarea name="shippingAddress" required className="text-xs mt-1 min-h-15" />
               </div>
               <div>
                 <Label className="text-xs">Preferred Currency</Label>
