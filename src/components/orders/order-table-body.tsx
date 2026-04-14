@@ -4,6 +4,7 @@ import { OrderRow } from '@/components/orders/order-row';
 import type { CompanyProfile, OrderWithBuyer } from '@/types';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const OrderModal = dynamic(
   () => import('@/components/orders/order-modal').then((m) => m.OrderModal),
@@ -35,13 +36,15 @@ export function OrderTableBody({
         ))}
       </tbody>
 
-      {selectedOrder && (
-        <OrderModal
-          order={selectedOrder}
-          companyProfile={companyProfile}
-          onClose={() => setSelectedOrder(null)}
-        />
-      )}
+      {selectedOrder &&
+        createPortal(
+          <OrderModal
+            order={selectedOrder}
+            companyProfile={companyProfile}
+            onClose={() => setSelectedOrder(null)}
+          />,
+          document.body
+        )}
     </>
   );
 }
