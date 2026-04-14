@@ -15,7 +15,7 @@ export default async function DashboardPage() {
   const { activeShipments, totalOutstanding, inventoryCount, recentOrders } = result.data;
 
   return (
-    <div className="p-4 max-w-6xl justify-self-center w-full">
+    <div className="p-4 max-w-7xl justify-self-center w-full">
       <div className="mb-4">
         <h1 className="text-base font-semibold">Executive Dashboard</h1>
         <p className="text-xs text-muted-foreground">Export operations overview</p>

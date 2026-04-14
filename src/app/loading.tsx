@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator';
 
 export default function DashboardLoading() {
   return (
-    <div className="p-4 max-w-6xl justify-self-center w-full">
+    <div className="p-4 max-w-7xl justify-self-center w-full">
       <div className="mb-4">
         <div className="h-5 w-40 bg-muted animate-pulse rounded" />
         <div className="h-3 w-48 bg-muted animate-pulse rounded mt-1.5" />
