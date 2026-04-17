@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/lib/db';
+import { db } from '@/prisma/db';
 import type { CreateBuyerInput } from '@/types';
 
 export async function getBuyers() {

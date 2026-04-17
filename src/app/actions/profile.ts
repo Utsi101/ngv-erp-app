@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/lib/db';
+import { db } from '@/prisma/db';
 import type { CompanyProfileInput, CompanyProfileUpdateInput } from '@/types';
 
 export async function getCompanyProfile() {

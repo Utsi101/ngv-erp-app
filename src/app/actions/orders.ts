@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/lib/db';
+import { db } from '@/prisma/db';
 import type { CreateOrderInput } from '@/types';
 
 export async function getOrders() {

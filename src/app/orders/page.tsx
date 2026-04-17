@@ -1,5 +1,5 @@
 import { OrderTable } from '@/components/orders/order-table';
-import { db } from '@/lib/db';
+import { db } from '@/prisma/db';
 
 export default async function OrdersPage() {
   const [orders, companyProfile] = await Promise.all([
